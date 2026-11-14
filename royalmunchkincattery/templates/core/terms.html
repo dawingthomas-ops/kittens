@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section"><div class="container narrow prose">
+  <h1>Terms of service</h1>
+  <p class="muted">Last updated {% now "F j, Y" %}. This is a plain-language starting template. Have your adoption contract and these terms reviewed by a qualified professional.</p>
+  <h2>Using this website</h2>
+  <p>Content on this site is provided for information. Photos and descriptions represent each kitten as accurately as we can, and a kitten's appearance can change as it grows.</p>
+  <h2>Reservations</h2>
+  <p>Submitting a reservation request does not complete a purchase. A kitten is held for you only after you sign the adoption contract and pay the deposit described in it. The contract sets out the price, deposit, health guarantee and your responsibilities.</p>
+  <h2>Health guarantee and spay or neuter</h2>
+  <p>Each kitten is sold as a pet under a spay or neuter agreement and with the written health guarantee shown on its page and in your contract. The contract governs the exact terms.</p>
+  <h2>Reviews and content you submit</h2>
+  <p>By submitting a review, you confirm it is your honest experience and allow us to publish it.</p>
+  <h2>Contact</h2>
+  <p>Questions about these terms? Email <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>.</p>
+</div></section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% if site_settings.announcement %}
+<div class="announce" role="note"><div class="container">{{ site_settings.announcement }} <a href="{% url 'core:waitlist' %}">Join the waitlist</a></div></div>
+{% endif %}
+<header class="site-header" id="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="{% url 'core:home' %}" aria-label="{{ SITE_NAME }} home">
+      {% include "partials/logo.html" %}
+      <span class="brand-text"><b>Royal Munchkin</b><i>Cattery</i></span>
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Main">
+      <a href="{% url 'kittens:list' %}" {% if request.resolver_match.app_name == 'kittens' and request.resolver_match.url_name != 'match' and request.resolver_match.url_name != 'favorites' %}aria-current="page"{% endif %}>Kittens</a>
+      <a href="{% url 'kittens:match' %}">Match quiz</a>
+      <a href="{% url 'core:breed_guide' %}">Breed guide</a>
+      <a href="{% url 'core:delivery' %}">Delivery</a>
+      <a href="{% url 'reviews:list' %}">Reviews</a>
+      <a href="{% url 'core:journal_list' %}">Journal</a>
+      <a href="{% url 'core:about' %}">About</a>
+      <a href="{% url 'core:contact' %}">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="fav-link" href="{% url 'kittens:favorites' %}" aria-label="Saved kittens">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.7 4.5 7 4.5c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 3.3 0 5.4 3.1 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg>
+        <span class="fav-count" data-fav-count hidden>0</span>
+      </a>
+      <a class="btn btn-gold btn-sm nav-cta" href="{% url 'kittens:list' %}">Meet the kittens</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,58 @@
+{% load humanize %}<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand-light" href="{% url 'core:home' %}">{% include "partials/logo.html" %}<span class="brand-text"><b>Royal Munchkin</b><i>Cattery</i></span></a>
+      <p>{{ site_settings.tagline }}. Browse individual kitten profiles and clear pricing between ${{ MIN_PRICE }} and ${{ MAX_PRICE|intcomma }}.</p>
+      <ul class="footer-badges">
+        <li>Individual profiles</li><li>Current photos</li><li>Clear pricing</li>
+      </ul>
+      <div class="social-links">
+        {% if site_settings.instagram_url %}<a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener noreferrer me">Instagram</a>{% endif %}
+        {% if site_settings.facebook_url %}<a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener noreferrer me">Facebook</a>{% endif %}
+        {% if site_settings.tiktok_url %}<a href="{{ site_settings.tiktok_url }}" target="_blank" rel="noopener noreferrer me">TikTok</a>{% endif %}
+        {% if site_settings.youtube_url %}<a href="{{ site_settings.youtube_url }}" target="_blank" rel="noopener noreferrer me">YouTube</a>{% endif %}
+      </div>
+    </div>
+    <div>
+      <h2 class="footer-h">Browse kittens</h2>
+      <ul>
+        <li><a href="{% url 'kittens:list' %}">All available kittens</a></li>
+        {% for slug, label in FOOTER_LANDING_LINKS %}<li><a href="{% url 'core:landing' slug=slug %}">{{ label }}</a></li>{% endfor %}
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Learn</h2>
+      <ul>
+        <li><a href="{% url 'core:breed_guide' %}">Munchkin breed guide</a></li>
+        <li><a href="{% url 'core:journal_list' %}">Care journal</a></li>
+        <li><a href="{% url 'kittens:match' %}">Kitten match quiz</a></li>
+        <li><a href="{% url 'core:faq' %}">FAQ</a></li>
+        <li><a href="{% url 'reviews:list' %}">Reviews</a></li>
+      </ul>
+      <h2 class="footer-h footer-h-2">Support</h2>
+      <ul>
+        <li><a href="{% url 'core:delivery' %}">Delivery and pickup</a></li>
+        <li><a href="{% url 'core:waitlist' %}">Join the waitlist</a></li>
+        <li><a href="{% url 'core:contact' %}">Contact us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Reach us</h2>
+      <address>
+        <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>
+        {% if CONTACT_PHONE %}<br><a href="tel:{{ CONTACT_PHONE_URI }}">Call us: {{ CONTACT_PHONE }} (Google Voice)</a><br><a href="sms:{{ CONTACT_PHONE_URI }}">Text us</a>{% endif %}
+        {% if WHATSAPP_NUMBER %}<br><a href="https://wa.me/{{ WHATSAPP_NUMBER }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>{% endif %}
+        {% if site_settings.city %}<br><span>Based in {{ site_settings.city }}{% if site_settings.state %}, {{ site_settings.state }}{% endif %}</span>{% endif %}
+        <br><span>{{ SITE_LOCATION_SUMMARY }}</span>
+      </address>
+      <div class="footer-admin">
+        <h2 class="footer-h footer-h-2">Admin</h2>
+        <a href="{% url 'accounts:login' %}" rel="nofollow">Admin sign in</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>&copy; {% now "Y" %} {{ SITE_NAME }}. All rights reserved.</span>
+    <span class="footer-legal"><a href="{% url 'core:privacy' %}">Privacy</a><a href="{% url 'core:terms' %}">Terms</a></span>
+  </div>
+</footer>

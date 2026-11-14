@@ -1,0 +1,1 @@
+{% if breadcrumbs %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{% for label, url in breadcrumbs %}{"@type":"ListItem","position":{{ forloop.counter }},"name":"{{ label|escapejs }}"{% if url %},"item":"{{ SITE_URL }}{{ url }}"{% endif %}}{% if not forloop.last %},{% endif %}{% endfor %}]}</script>{% endif %}

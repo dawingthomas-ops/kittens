@@ -1,0 +1,10 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Edit reservation{% endblock %}
+{% block content %}
+<h1>Reservation: {{ reservation.full_name }}</h1>
+<p class="muted">For {{ reservation.kitten.name }}, received {{ reservation.created_at|date:"M j, Y g:ia" }}.</p>
+<form method="post" class="f panel" style="max-width:760px">{% csrf_token %}{{ form.non_field_errors }}
+  <div class="form-grid">{% for field in form %}<div class="fld">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}</div>
+  <div class="row"><button class="btn" type="submit">Save</button><a class="btn ghost" href="{% url 'dashboard:reservations' %}">Cancel</a></div>
+</form>
+{% endblock %}

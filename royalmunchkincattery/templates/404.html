@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Page not found | {{ SITE_NAME }}{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+{% block content %}
+<section class="section"><div class="container narrow center">
+  <h1>This page wandered off</h1>
+  <p class="lede">Like any good cat, it did not leave a note. Try one of these instead.</p>
+  <div class="btn-row" style="justify-content:center;margin-top:1.6rem"><a class="btn btn-gold" href="{% url 'kittens:list' %}">Browse kittens</a><a class="btn btn-ghost" href="{% url 'core:home' %}">Go home</a><a class="btn btn-ghost" href="{% url 'core:contact' %}">Contact us</a></div>
+</div></section>
+{% endblock %}

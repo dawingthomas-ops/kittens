@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block structured_data %}
+{% include "partials/faq_schema.html" with faqs=faqs %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"{{ h1|escapejs }}","url":"{{ SITE_URL }}/{{ slug }}/","description":"{{ meta_description|escapejs }}","isPartOf":{"@id":"{{ SITE_URL }}/#website"}}</script>
+{% endblock %}
+{% block content %}
+<section class="section-tight"><div class="container narrow">
+  <h1>{{ h1 }}</h1>
+  <p class="lede">{{ intro }}</p>
+  <div class="btn-row" style="margin-top:1.4rem"><a class="btn btn-gold" href="{% url 'kittens:list' %}{% if list_query %}?{{ list_query }}{% endif %}">See {{ kitten_count }} matching kitten{{ kitten_count|pluralize }}</a><a class="btn btn-ghost" href="{% url 'kittens:match' %}">Take the match quiz</a></div>
+</div></section>
+
+<section class="section" style="padding-top:1rem">
+  <div class="container">
+    <div class="kitten-grid reveal">
+      {% for kitten in kittens %}{% include "partials/kitten_card.html" %}
+      {% empty %}<p class="empty-state">No kittens match this look right now. <a href="{% url 'core:waitlist' %}">Join the waitlist</a> and we will tell you first when one arrives.</p>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint"><div class="container narrow prose">
+  {% for heading, paragraphs in sections %}<h2>{{ heading }}</h2>{% for p in paragraphs %}<p>{{ p }}</p>{% endfor %}{% endfor %}
+</div></section>
+
+<section class="section"><div class="container narrow">
+  <h2>Frequently asked questions</h2>
+  {% include "partials/faq_list.html" with faqs=faqs %}
+  {% if related %}<h2 style="margin-top:3rem;font-size:1.5rem">Explore more</h2>
+  <ul class="link-list">{% for r in related %}<li><a href="{% url 'core:landing' slug=r.slug %}">{{ r.label }}</a></li>{% endfor %}<li><a href="{% url 'core:breed_guide' %}">Munchkin cat breed guide</a></li></ul>{% endif %}
+</div></section>
+{% endblock %}

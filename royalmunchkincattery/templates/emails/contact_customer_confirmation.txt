@@ -1,0 +1,9 @@
+Hi {{ message.name }},
+
+Thank you for contacting Royal Munchkin Cattery. We received your message{% if message.subject %} about "{{ message.subject }}"{% endif %} and will reply within one business day.
+
+Your message:
+{{ message.message }}
+
+Warmly,
+Royal Munchkin Cattery

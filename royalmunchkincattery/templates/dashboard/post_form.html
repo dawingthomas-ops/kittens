@@ -1,0 +1,24 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}{% if object %}Edit post{% else %}Write a post{% endif %}{% endblock %}
+{% block content %}
+<div class="dash-heading">
+  <div><p class="eyebrow">Content studio</p><h1>{% if object %}Edit post{% else %}Write a post{% endif %}</h1><p class="muted">Save as a draft while you review it, then publish when it is ready.</p></div>
+</div>
+<form method="post" enctype="multipart/form-data" class="f post-editor">{% csrf_token %}{{ form.non_field_errors }}
+  <section class="panel editor-panel" aria-labelledby="post-content-title">
+    <h2 id="post-content-title">Post content</h2>
+    {% for field in form %}
+      <div class="fld {% if field.name == 'content' %}editor-body{% endif %}">
+        {{ field.label_tag }}{{ field }}
+        {% if field.help_text %}<span class="field-help">{{ field.help_text }}</span>{% endif %}
+        {{ field.errors }}
+      </div>
+    {% endfor %}
+  </section>
+  <div class="row editor-actions">
+    <button class="btn gold" type="submit">Save post</button>
+    <a class="btn ghost" href="{% url 'dashboard:posts' %}">Cancel</a>
+    {% if object and object.is_published %}<a class="btn ghost" href="{{ object.get_absolute_url }}" target="_blank" rel="noopener">Preview live post</a>{% endif %}
+  </div>
+</form>
+{% endblock %}

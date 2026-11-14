@@ -1,0 +1,31 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>{% block title %}Dashboard{% endblock %} | Royal Munchkin</title>
+<link rel="icon" href="{% static 'img/favicon.svg' %}">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head><body class="dash">
+{% with url=request.resolver_match.url_name %}
+<aside class="dash-side">
+  <a class="logo" href="{% url 'dashboard:overview' %}">{% include "partials/logo.html" %} Royal Munchkin</a>
+  <nav class="dash-nav" aria-label="Administrator navigation">
+    <a class="nav {% if url == 'overview' %}active{% endif %}" href="{% url 'dashboard:overview' %}">Overview</a>
+    <a class="nav {% if 'reservation' in url %}active{% endif %}" href="{% url 'dashboard:reservations' %}">Reservations</a>
+    <a class="nav {% if 'kitten' in url %}active{% endif %}" href="{% url 'dashboard:kittens' %}">Kittens</a>
+    <a class="nav {% if 'post' in url %}active{% endif %}" href="{% url 'dashboard:posts' %}">Journal posts</a>
+    <a class="nav {% if url == 'testimonials' or url == 'review_edit' %}active{% endif %}" href="{% url 'dashboard:testimonials' %}">Reviews</a>
+    <a class="nav {% if url == 'inbox' %}active{% endif %}" href="{% url 'dashboard:inbox' %}">Inbox</a>
+    <a class="nav" href="{% url 'core:home' %}" target="_blank" rel="noopener">View site</a>
+    <a class="nav" href="/admin/">Django admin</a>
+  </nav>
+  <div class="dash-account"><span>Signed in as <b>{{ user.get_username }}</b></span>
+    <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="nav" type="submit">Log out</button></form>
+  </div>
+</aside>
+{% endwith %}
+<main class="dash-main">
+  {% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+{% block extra_js %}{% endblock %}
+</body></html>

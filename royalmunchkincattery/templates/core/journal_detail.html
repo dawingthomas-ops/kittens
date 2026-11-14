@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static seo %}
+{% block og_type %}article{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"{{ post.title|escapejs }}","description":"{{ post.seo_description|escapejs }}","datePublished":"{{ post.published_at|date:'c' }}","dateModified":"{{ post.updated_at|date:'c' }}","mainEntityOfPage":"{{ SITE_URL }}{{ post.get_absolute_url }}","image":"{% if post.featured_image %}{{ post.featured_image.url|absolute_url }}{% else %}{{ SITE_URL }}{% static 'img/cat-relaxed.jpg' %}{% endif %}","author":{"@type":"Organization","name":"{{ SITE_NAME|escapejs }}"},"publisher":{"@id":"{{ SITE_URL }}/#organization"}}</script>
+{% endblock %}
+{% block content %}
+<article class="section-tight"><div class="container narrow">
+  <header class="article-head"><div class="post-meta"><span class="tag">{{ post.category }}</span><span>{{ post.reading_time }} min read</span><time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"F j, Y" }}</time></div>
+  <h1>{{ post.title }}</h1>{% if post.excerpt %}<p class="lede">{{ post.excerpt }}</p>{% endif %}</header>
+  {% if post.featured_image %}<img class="journal-cover" src="{{ post.featured_image.url }}" alt="{{ post.title }}" width="1200" height="675" fetchpriority="high">{% else %}<figure class="journal-cover-figure"><img class="journal-cover" src="{% static 'img/cat-relaxed.jpg' %}" alt="Representative photo of a cat; this is not a photo specific to this article." width="1000" height="640" fetchpriority="high"><figcaption>Representative cat photo. Individual kitten listings show their own photos.</figcaption></figure>{% endif %}
+  <div class="article prose">{{ post.content|safe }}</div>
+</div></article>
+{% if featured_kittens %}<section class="section section-tint"><div class="container"><h2>Meet kittens looking for homes</h2><div class="kitten-grid">{% for kitten in featured_kittens %}{% include "partials/kitten_card.html" %}{% endfor %}</div></div></section>{% endif %}
+{% if related_posts %}<section class="section"><div class="container"><h2>Keep reading</h2><div class="post-grid">{% for post in related_posts %}{% include "partials/post_card.html" %}{% endfor %}</div></div></section>{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+Hi {{ reservation.full_name }},
+
+Thank you for your interest in {{ reservation.kitten.name }}, our {{ reservation.kitten.listing_title|lower }}.
+
+We received your request and will reply within one business day with the adoption contract, the health guarantee terms and secure deposit instructions. Nothing has been charged.
+
+A quick recap:
+- Kitten: {{ reservation.kitten.name }} (${{ reservation.kitten.price|floatformat:0 }})
+- Go-home date: {{ reservation.kitten.go_home_date|date:"F j, Y" }}
+- Delivery preference: {{ reservation.get_delivery_method_display }}
+
+Want a live video visit? Just reply to this email.
+
+Warmly,
+Royal Munchkin Cattery

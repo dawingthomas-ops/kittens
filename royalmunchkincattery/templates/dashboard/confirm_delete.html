@@ -1,0 +1,7 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Confirm delete{% endblock %}
+{% block content %}
+<h1>Delete this {{ what }}?</h1>
+<form method="post" class="panel" style="max-width:520px">{% csrf_token %}<p>{{ object }}</p><p class="muted">This cannot be undone.</p>
+  <div class="row"><button class="btn danger" type="submit">Yes, delete</button><a class="btn ghost" href="{{ back_url }}">Cancel</a></div></form>
+{% endblock %}

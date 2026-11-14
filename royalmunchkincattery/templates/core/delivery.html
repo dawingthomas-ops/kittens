@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section"><div class="container">
+  <div class="section-head"><h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Pickup and delivery</h1>
+  <p class="lede">Your kitten travels safely, with a vet clearance and a person who cares, every step of the way.</p></div>
+  <div class="delivery-grid">{% for title, text in delivery_options %}<article class="delivery-card reveal"><h3>{{ title }}</h3><p>{{ text }}</p></article>{% endfor %}</div>
+  <div class="prose" style="margin-top:3rem">
+    <h2>Our travel promises</h2>
+    <ul><li>Kittens never travel in cargo.</li><li>A vet clears every kitten before travel and you receive the health papers.</li><li>You get photos and updates from pickup to your door.</li><li>Delivery costs are quoted in advance. There are no surprise charges.</li></ul>
+    <h2>Your kitten's first day</h2>
+    <p>Prepare a quiet room, a litter box with low sides and a bed. Our <a href="{% url 'core:journal_detail' 'how-to-prepare-your-home-for-a-munchkin-kitten' %}">home preparation checklist</a> walks you through it.</p>
+  </div>
+  <div class="btn-row" style="margin-top:2rem"><a class="btn btn-gold" href="{% url 'kittens:list' %}">Find your kitten</a><a class="btn btn-ghost" href="{% url 'core:contact' %}">Ask about delivery to your area</a></div>
+</div></section>
+{% endblock %}

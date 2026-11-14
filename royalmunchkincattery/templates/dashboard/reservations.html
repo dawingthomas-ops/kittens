@@ -1,0 +1,16 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Reservations{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between"><h1>Reservations</h1><a class="btn ghost" href="{% url 'dashboard:reservations_export' %}">Export CSV</a></div>
+<div class="filters"><a href="{% url 'dashboard:reservations' %}" class="{% if not current_status %}on{% endif %}">All</a>{% for value, label in status_choices %}<a href="?status={{ value }}" class="{% if current_status == value %}on{% endif %}">{{ label }}</a>{% endfor %}</div>
+<div class="table-wrap"><table class="t"><thead><tr><th>Customer</th><th>Contact</th><th>Kitten</th><th>Message sent via</th><th>Delivery</th><th>Status</th><th>Received</th><th></th></tr></thead><tbody>
+{% for r in reservations %}<tr>
+  <td><b>{{ r.full_name }}</b><br><span class="muted">{{ r.shipping_city }}, {{ r.shipping_state }}</span></td>
+  <td><a href="mailto:{{ r.email }}">{{ r.email }}</a>{% if r.phone %}<br>{{ r.phone }}{% endif %}<br><span class="muted">Prefers {{ r.get_contact_preference_display|lower }}</span></td>
+  <td>{{ r.kitten.name }}</td><td>{{ r.get_message_channel_display }}</td><td>{{ r.get_delivery_method_display }}</td>
+  <td><form method="post" action="{% url 'dashboard:reservation_status' r.pk %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><select name="status" onchange="this.form.submit()">{% for value, label in status_choices %}<option value="{{ value }}" {% if r.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></form></td>
+  <td class="muted">{{ r.created_at|date:"M j, g:ia" }}</td>
+  <td class="row"><a class="btn sm ghost" href="{% url 'dashboard:reservation_edit' r.pk %}">Edit</a><a class="btn sm danger" href="{% url 'dashboard:reservation_delete' r.pk %}">Delete</a></td>
+</tr>{% empty %}<tr><td colspan="8" class="muted">No reservations found.</td></tr>{% endfor %}</tbody></table></div>
+{% include "dashboard/_pager.html" %}
+{% endblock %}

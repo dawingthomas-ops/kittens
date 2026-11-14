@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block title %}Reserve {{ kitten.name }} | Royal Munchkin Cattery{% endblock %}
+{% block meta_description %}Reserve {{ kitten.name }}, a {{ kitten.look|lower }} Munchkin kitten. Send a short request and we reply within one business day.{% endblock %}
+{% block meta_robots %}noindex, follow{% endblock %}
+{% block content %}
+<section class="section-tight"><div class="container reserve-layout">
+  <div>
+    <h1 style="font-size:clamp(2.1rem,1.4rem + 3vw,3.4rem)">Reserve {{ kitten.name }}</h1>
+    <p class="lede">Three short steps. No payment is taken here. Choose email or Google Voice text to send your kitten request; we reply within one business day.</p>
+    <div class="steps-bar" hidden aria-hidden="true"><i></i><i></i><i></i></div>
+    <form id="reserve-form" class="card" method="post" novalidate data-loading="Sending request..." action="{% url 'reservations:create' kitten.slug %}">
+      {% csrf_token %}
+      {{ form.submission_key }}
+      {% if form.non_field_errors %}<div class="form-banner">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="hp-field" aria-hidden="true"><label for="id_website">Website</label>{{ form.website }}</div>
+
+      <div class="step-pane">
+        <h2 style="font-size:1.5rem">About you</h2>
+        <div class="field-group"><label for="id_full_name">Full name</label>{{ form.full_name }}{{ form.full_name.errors }}</div>
+        <div class="field-group"><label for="id_email">Email</label>{{ form.email }}{{ form.email.errors }}</div>
+        <div class="field-group"><label for="id_phone">Phone <span class="muted">(optional unless you prefer calls or texts)</span></label>{{ form.phone }}{{ form.phone.errors }}</div>
+        <div class="field-group"><span class="field-label">Best way to reach you</span><div class="choice-row">{% for radio in form.contact_preference %}<label>{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div>{{ form.contact_preference.errors }}</div>
+      </div>
+
+      <div class="step-pane">
+        <h2 style="font-size:1.5rem">Getting {{ kitten.name }} home</h2>
+        <div class="field-group"><label for="id_shipping_city">City</label>{{ form.shipping_city }}{{ form.shipping_city.errors }}</div>
+        <div class="field-group"><label for="id_shipping_state">State or region</label>{{ form.shipping_state }}{{ form.shipping_state.errors }}</div>
+        <div class="field-group"><span class="field-label">How would you like to receive {{ kitten.name }}?</span><div class="choice-row">{% for radio in form.delivery_method %}<label>{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div>{{ form.delivery_method.errors }}</div>
+      </div>
+
+      <div class="step-pane">
+        <h2 style="font-size:1.5rem">Anything we should know?</h2>
+        <div class="field-group"><span class="field-label">{{ form.message_channel.label }}</span><div class="choice-row">{% for radio in form.message_channel %}<label>{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div><p class="help-text">We’ll save your request, then offer a message addressed to us with your chosen kitten and reservation details filled in. Review it and tap Send in your email or text app.</p>{{ form.message_channel.errors }}</div>
+        <div class="field-group"><label class="checkbox-line">{{ form.has_other_pets }} I have other pets at home</label></div>
+        <div class="field-group"><label for="id_message">Message <span class="muted">(optional)</span></label>{{ form.message }}{{ form.message.errors }}<p class="help-text">Tell us about your home, or ask for a video visit.</p></div>
+        <p class="help-text">By sending this you agree to our <a href="{% url 'core:privacy' %}">privacy policy</a>.</p>
+      </div>
+
+      <div class="step-nav"><button type="button" class="btn btn-ghost" data-back hidden>Back</button><button type="button" class="btn btn-primary" data-next hidden>Continue</button><button type="submit" class="btn btn-gold" data-submit>Save request &amp; continue to message</button></div>
+    </form>
+  </div>
+  <aside class="mini-kitten">
+    {% if kitten.cover_photo %}<img src="{{ kitten.cover_photo.url }}" alt="{{ kitten.alt_text }}" width="320" height="400">{% endif %}
+    <h3>{{ kitten.name }}</h3><p class="muted" style="margin:0">{{ kitten.listing_title }}</p>
+    <p style="margin:.4rem 0 0"><b class="kc-price">${{ kitten.price|floatformat:0|intcomma }}</b></p>
+    <p class="help-text" style="margin:0">${{ kitten.deposit_amount|floatformat:0 }} deposit holds {{ kitten.name }}</p>
+  </aside>
+</div></section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/reserve.js' %}" defer></script>{% endblock %}

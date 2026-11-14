@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block canonical_path %}/kittens/{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Available Munchkin kittens","url":"{{ SITE_URL }}/kittens/","mainEntity":{"@type":"ItemList","numberOfItems":{{ total_count }},"itemListElement":[{% for kitten in kittens %}{"@type":"ListItem","position":{{ forloop.counter }},"url":"{{ SITE_URL }}{{ kitten.get_absolute_url }}","name":"{{ kitten.name|escapejs }}, {{ kitten.listing_title|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]},"offers":{"@type":"AggregateOffer","priceCurrency":"USD","lowPrice":"{{ MIN_PRICE }}","highPrice":"{{ MAX_PRICE }}","offerCount":{{ total_count }}}}</script>
+{% endblock %}
+{% block content %}
+<section class="section-tight">
+  <div class="container">
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Available Munchkin kittens</h1>
+    <p class="lede">Browse kittens priced from ${{ MIN_PRICE }} to ${{ MAX_PRICE|intcomma }}. Each profile shows confirmed details and clearly marks information still being verified. Filter by what matters to you, or <a href="{% url 'kittens:match' %}">let the match quiz choose</a>.</p>
+
+    <form id="filter-form" method="get" action="{% url 'kittens:list' %}" class="filter-bar" aria-label="Filter kittens">
+      <div class="field"><label for="f-search">Search</label><input type="text" id="f-search" name="search" value="{{ request.GET.search }}" placeholder="Name or trait" maxlength="80"></div>
+      <div class="field"><label for="f-gender">Gender</label>
+        <select id="f-gender" name="gender"><option value="">Any</option>{% for value, label in filter.filters.gender.extra.choices %}<option value="{{ value }}" {% if request.GET.gender == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-coat">Coat</label>
+        <select id="f-coat" name="coat_length"><option value="">Any</option>{% for value, label in filter.filters.coat_length.extra.choices %}<option value="{{ value }}" {% if request.GET.coat_length == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-color">Color</label>
+        <select id="f-color" name="coat_color"><option value="">Any</option>{% for value, label in filter.filters.coat_color.extra.choices %}<option value="{{ value }}" {% if request.GET.coat_color == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-pattern">Pattern</label>
+        <select id="f-pattern" name="pattern"><option value="">Any</option>{% for value, label in filter.filters.pattern.extra.choices %}<option value="{{ value }}" {% if request.GET.pattern == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-leg">Leg length</label>
+        <select id="f-leg" name="leg_length"><option value="">Any</option>{% for value, label in filter.filters.leg_length.extra.choices %}<option value="{{ value }}" {% if request.GET.leg_length == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-energy">Personality</label>
+        <select id="f-energy" name="energy"><option value="">Any</option>{% for value, label in filter.filters.energy.extra.choices %}<option value="{{ value }}" {% if request.GET.energy == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="f-max">Price up to</label>
+        <div class="range-wrap"><input type="range" id="f-max" name="max_price" min="{{ MIN_PRICE }}" max="{{ MAX_PRICE }}" step="25" value="{{ request.GET.max_price|default:MAX_PRICE }}"><output class="range-out" id="f-max-out" for="f-max">${{ request.GET.max_price|default:MAX_PRICE|intcomma }}</output></div></div>
+      <div class="field"><label for="f-sort">Sort by</label>
+        <select id="f-sort" name="ordering">
+          <option value="">Featured</option>
+          <option value="newest" {% if request.GET.ordering == 'newest' %}selected{% endif %}>Newest first</option>
+          <option value="price" {% if request.GET.ordering == 'price' %}selected{% endif %}>Price, low to high</option>
+          <option value="-price" {% if request.GET.ordering == '-price' %}selected{% endif %}>Price, high to low</option>
+          <option value="age" {% if request.GET.ordering == 'age' %}selected{% endif %}>Oldest first</option>
+        </select></div>
+      <div class="field btn-row" style="align-items:center"><button class="btn btn-primary" type="submit">Search</button><a href="{% url 'kittens:list' %}" class="link-btn" data-reset>Reset</a></div>
+    </form>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="container"><div id="results" aria-live="polite">{% include "kittens/_results.html" %}</div></div>
+</section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/filters.js' %}" defer></script>{% endblock %}

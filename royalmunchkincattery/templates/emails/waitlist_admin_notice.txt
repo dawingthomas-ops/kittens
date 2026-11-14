@@ -1,0 +1,11 @@
+New waitlist signup
+
+Name: {{ e.name }}
+Email: {{ e.email }}
+Phone: {{ e.phone|default:"(none given)" }}
+Gender: {{ e.get_preferred_gender_display }}
+Coat: {{ e.get_preferred_coat_length_display }}
+Colors: {{ e.preferred_colors|default:"(any)" }}
+
+Notes:
+{{ e.notes|default:"(none)" }}

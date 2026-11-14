@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block structured_data %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"Contact {{ SITE_NAME|escapejs }}","url":"{{ SITE_URL }}/contact/"}</script>{% endblock %}
+{% block content %}
+<section class="section"><div class="container prose-grid">
+  <div>
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Ask us anything</h1>
+    <p class="lede">Questions about a kitten, the breed, delivery or the adoption process? We reply within one business day.</p>
+    <form class="card" method="post" novalidate data-loading="Sending message..." style="margin-top:1.6rem">
+      {% csrf_token %}
+      {{ form.submission_key }}
+      {% if form.errors %}<div class="form-banner">Please fix the highlighted fields.</div>{% endif %}
+      <div class="hp-field" aria-hidden="true"><label for="id_website">Website</label>{{ form.website }}</div>
+      <div class="field-group"><label for="id_name">Your name</label>{{ form.name }}{{ form.name.errors }}</div>
+      <div class="field-group"><label for="id_email">Email</label>{{ form.email }}{{ form.email.errors }}</div>
+      <div class="field-group"><label for="id_phone">Phone <span class="muted">(optional)</span></label>{{ form.phone }}{{ form.phone.errors }}</div>
+      <div class="field-group"><label for="id_subject">Subject <span class="muted">(optional)</span></label>{{ form.subject }}</div>
+      <div class="field-group"><label for="id_message">Message</label>{{ form.message }}{{ form.message.errors }}</div>
+      <button class="btn btn-gold" type="submit" data-loading="Sending message...">Send message</button>
+    </form>
+  </div>
+  <aside class="aside-card"><h2>Prefer to reach out directly?</h2>
+    <p><a href="mailto:{{ site_settings.contact_email }}" style="color:var(--gold-bright)">Email {{ site_settings.contact_email }}</a></p>
+    {% if CONTACT_PHONE %}<p><a href="tel:{{ CONTACT_PHONE_URI }}" style="color:var(--gold-bright)">Call {{ CONTACT_PHONE }} (Google Voice)</a></p><p><a href="sms:{{ CONTACT_PHONE_URI }}" style="color:var(--gold-bright)">Text us</a></p>{% endif %}
+    {% if WHATSAPP_NUMBER %}<p><a href="https://wa.me/{{ WHATSAPP_NUMBER }}" target="_blank" rel="noopener noreferrer" style="color:var(--gold-bright)">Message on WhatsApp</a></p>{% endif %}
+    <p style="margin:0">{{ SITE_LOCATION_SUMMARY }}.</p></aside>
+</div></section>
+{% endblock %}

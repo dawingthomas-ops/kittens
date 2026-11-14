@@ -1,0 +1,15 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+<h1>Inbox</h1>
+<h2>Contact messages</h2>
+<div class="table-wrap" style="margin-bottom:2rem"><table class="t"><thead><tr><th>From</th><th>Message</th><th>Received</th><th></th></tr></thead><tbody>
+{% for m in messages_list %}<tr><td><b>{{ m.name }}</b><br><a href="mailto:{{ m.email }}">{{ m.email }}</a>{% if m.phone %}<br>{{ m.phone }}{% endif %}</td><td style="max-width:460px"><b>{{ m.subject }}</b><br>{{ m.message|linebreaksbr }}</td><td class="muted">{{ m.created_at|date:"M j, g:ia" }}</td>
+<td><form method="post" action="{% url 'dashboard:inbox_toggle' 'message' m.pk %}">{% csrf_token %}<button class="btn sm {% if m.is_handled %}ghost{% else %}gold{% endif %}" type="submit">{% if m.is_handled %}Handled (undo){% else %}Mark handled{% endif %}</button></form></td></tr>
+{% empty %}<tr><td colspan="4" class="muted">No messages yet.</td></tr>{% endfor %}</tbody></table></div>
+<h2>Waitlist</h2>
+<div class="table-wrap"><table class="t"><thead><tr><th>Name</th><th>Preferences</th><th>Joined</th><th></th></tr></thead><tbody>
+{% for w in waitlist %}<tr><td><b>{{ w.name }}</b><br><a href="mailto:{{ w.email }}">{{ w.email }}</a>{% if w.phone %}<br>{{ w.phone }}{% endif %}</td><td>{{ w.get_preferred_gender_display }}, {{ w.get_preferred_coat_length_display|lower }}{% if w.preferred_colors %}, {{ w.preferred_colors }}{% endif %}{% if w.notes %}<br><span class="muted">{{ w.notes }}</span>{% endif %}</td><td class="muted">{{ w.created_at|date:"M j" }}</td>
+<td><form method="post" action="{% url 'dashboard:inbox_toggle' 'waitlist' w.pk %}">{% csrf_token %}<button class="btn sm {% if w.is_contacted %}ghost{% else %}gold{% endif %}" type="submit">{% if w.is_contacted %}Contacted (undo){% else %}Mark contacted{% endif %}</button></form></td></tr>
+{% empty %}<tr><td colspan="4" class="muted">No waitlist signups yet.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

@@ -1,0 +1,12 @@
+Hi {{ e.name }},
+
+You're on the Royal Munchkin Cattery waitlist. We saved your preferences:
+
+- Gender: {{ e.get_preferred_gender_display }}
+- Coat: {{ e.get_preferred_coat_length_display }}
+- Colors: {{ e.preferred_colors|default:"any" }}
+
+We will email you first when a matching kitten is on the way. In the meantime you can browse the kittens available now at https://royalmunchkincattery.com/kittens/
+
+Warmly,
+Royal Munchkin Cattery

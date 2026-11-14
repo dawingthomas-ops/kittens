@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Your saved kittens</h1>
+    <p class="lede">Kittens you hearted are kept on this device. Nothing is sent to us until you reserve.</p>
+    <div id="fav-results" class="kitten-grid" data-url="{% url 'kittens:favorites_cards' %}" style="margin-top:2rem"><p class="empty-state">Loading your saved kittens&hellip;</p></div>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/favorites.js' %}" defer></script>{% endblock %}

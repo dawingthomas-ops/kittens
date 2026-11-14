@@ -1,0 +1,9 @@
+New contact message
+
+From: {{ m.name }} <{{ m.email }}>
+Phone: {{ m.phone|default:"(none given)" }}
+Subject: {{ m.subject|default:"(none)" }}
+
+{{ m.message }}
+
+Reply to this email to answer directly.

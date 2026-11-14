@@ -1,0 +1,8 @@
+<div class="faq-list">
+{% for q, a in faqs %}
+  <details class="faq-item">
+    <summary>{{ q }}</summary>
+    <div class="faq-answer"><p>{{ a }}</p></div>
+  </details>
+{% endfor %}
+</div>

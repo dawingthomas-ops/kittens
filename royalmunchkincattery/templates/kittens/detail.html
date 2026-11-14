@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static humanize seo %}
+{% block og_type %}product{% endblock %}
+{% block body_class %}has-mobile-bar{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ kitten.name|escapejs }}, {{ kitten.listing_title|escapejs }}",
+  "description": "{{ kitten.headline|escapejs }} {{ kitten.look|escapejs }} {{ kitten.get_coat_length_display|escapejs|lower }} Munchkin kitten, {{ kitten.get_gender_display|lower }}.",
+  "sku": "{{ kitten.slug }}",
+  "category": "Munchkin kitten",
+  "brand": {"@type": "Brand", "name": "{{ SITE_NAME|escapejs }}"},
+  "image": [{% if kitten.cover_photo %}"{{ kitten.cover_photo.url|absolute_url }}"{% endif %}{% for photo in gallery %}, "{{ photo.image.url|absolute_url }}"{% endfor %}],
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ SITE_URL }}{{ kitten.get_absolute_url }}",
+    "price": "{{ kitten.price|floatformat:2 }}",
+    "priceCurrency": "USD",
+    "priceValidUntil": "{% now 'Y' %}-12-31",
+    "availability": "{% if kitten.status == 'available' %}https://schema.org/InStock{% elif kitten.status == 'coming_soon' %}https://schema.org/PreOrder{% elif kitten.status == 'reserved' %}https://schema.org/LimitedAvailability{% else %}https://schema.org/SoldOut{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition",
+    "seller": {"@type": "Organization", "name": "{{ SITE_NAME|escapejs }}"}
+  }{% if review_count %},
+  "aggregateRating": {"@type": "AggregateRating", "ratingValue": "{{ average_rating|floatformat:1 }}", "reviewCount": {{ review_count }}},
+  "review": [{% for t in approved_testimonials %}{"@type": "Review", "author": {"@type": "Person", "name": "{{ t.author_name|escapejs }}"}, "reviewRating": {"@type": "Rating", "ratingValue": {{ t.rating }}, "bestRating": 5}, "reviewBody": "{{ t.body|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]{% endif %}
+}
+</script>
+{% endblock %}
+{% block content %}
+<section class="section-tight">
+  <div class="container detail">
+    <div class="gallery">
+      <button class="gallery-main" type="button" data-gallery-main aria-label="Open photo viewer">
+        {% if kitten.cover_photo %}<img src="{{ kitten.cover_photo.url }}" alt="{{ kitten.alt_text }}" width="900" height="1125" fetchpriority="high" decoding="async">{% endif %}
+        <span class="zoom-hint">Tap to zoom</span>
+      </button>
+      {% if gallery %}
+      <div class="thumbs" role="group" aria-label="More photos of {{ kitten.name }}">
+        <button class="thumb" type="button" data-gallery-thumb data-full="{{ kitten.cover_photo.url }}" data-alt="{{ kitten.alt_text }}" aria-current="true" aria-label="Show cover photo"><img src="{{ kitten.cover_photo.url }}" alt="" width="84" height="84" loading="lazy"></button>
+        {% for photo in gallery %}<button class="thumb" type="button" data-gallery-thumb data-full="{{ photo.image.url }}" data-alt="{{ photo.alt_text }}" aria-current="false" aria-label="Show photo {{ forloop.counter|add:1 }}"><img src="{{ photo.image.url }}" alt="" width="84" height="84" loading="lazy"></button>{% endfor %}
+      </div>
+      {% endif %}
+      {% if kitten.video_url %}<p style="margin-top:1rem"><a href="{{ kitten.video_url }}" target="_blank" rel="noopener noreferrer">Watch {{ kitten.name }} on video</a></p>{% endif %}
+    </div>
+
+    <div class="detail-panel">
+      <span class="pill-status status-{{ kitten.status }}">{{ kitten.get_status_display }}</span>
+      <h1>{{ kitten.name }}</h1>
+      <p class="lede" style="margin-bottom:.4rem">{{ kitten.headline }}</p>
+      <p class="muted" style="margin:0">{{ kitten.listing_title }}</p>
+      <div class="price-row"><span class="price">${{ kitten.price|floatformat:0|intcomma }}</span><span class="deposit">${{ kitten.deposit_amount|floatformat:0 }} deposit holds {{ kitten.name }}</span></div>
+      {% if kitten.personality_list %}<ul class="tag-row" aria-label="Personality">{% for tag in kitten.personality_list %}<li>{{ tag|capfirst }}</li>{% endfor %}</ul>{% endif %}
+
+      {% if kitten.is_open %}
+      <div class="cta-stack">
+        <a class="btn btn-gold btn-block" data-primary-cta href="{% url 'reservations:create' kitten.slug %}">Reserve {{ kitten.name }}</a>
+        <button class="btn btn-ghost btn-block" type="button" data-fav="{{ kitten.slug }}" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.7 4.5 7 4.5c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 3.3 0 5.4 3.1 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg>Save</button>
+        {% if WHATSAPP_NUMBER %}<a class="btn btn-ghost btn-block" target="_blank" rel="noopener noreferrer" href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Hello%2C%20I%27m%20interested%20in%20{{ kitten.name|urlencode }}%2C%20the%20{{ kitten.look|urlencode }}%20Munchkin%20kitten.%20Is%20{{ kitten.name|urlencode }}%20still%20available%3F">WhatsApp us</a>{% else %}<a class="btn btn-ghost btn-block" href="{% url 'core:contact' %}">Ask a question</a>{% endif %}
+      </div>
+      <p class="help-text">No payment is taken online. {% if not kitten.go_home_date %}Go-home timing is still being confirmed. {% endif %}{% if not kitten.care_info_confirmed %}Health and care details are still being confirmed. {% endif %}We reply within one business day with current details and next steps.</p>
+      {% else %}
+      <div class="cta-stack"><a class="btn btn-gold btn-block" href="{% url 'kittens:list' %}">See other available kittens</a><a class="btn btn-ghost btn-block" href="{% url 'core:waitlist' %}">Join the waitlist</a></div>
+      {% endif %}
+
+      <dl class="specs">
+        <div><dt>Gender</dt><dd>{{ kitten.get_gender_display }}</dd></div>
+        <div><dt>Coat</dt><dd>{{ kitten.get_coat_length_display }}</dd></div>
+        <div><dt>Color and pattern</dt><dd>{{ kitten.look }}</dd></div>
+        <div><dt>Legs</dt><dd>{{ kitten.get_leg_length_display }}</dd></div>
+        {% if kitten.eye_color %}<div><dt>Eyes</dt><dd>{{ kitten.get_eye_color_display }}</dd></div>{% endif %}
+        <div><dt>Age</dt><dd>{{ kitten.age_label }}</dd></div>
+        <div><dt>Go-home date</dt><dd>{% if kitten.go_home_date %}{{ kitten.go_home_date|date:"M j, Y" }}{% else %}To be confirmed{% endif %}</dd></div>
+        <div><dt>Personality</dt><dd>{{ kitten.get_energy_display }}</dd></div>
+        {% if kitten.weight_estimate_lb %}<div><dt>Est. adult weight</dt><dd>{{ kitten.weight_estimate_lb }} lb</dd></div>{% endif %}
+        {% if kitten.registry %}<div><dt>Registry</dt><dd>{{ kitten.registry }}</dd></div>{% endif %}
+      </dl>
+      <div class="share"><button class="link-btn" type="button" data-share>Share {{ kitten.name }}</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container prose-grid">
+    <div class="prose">
+      <h2>About {{ kitten.name }}</h2>
+      {% for para in kitten.description|split_lines %}<p>{{ para|linebreaksbr }}</p>{% endfor %}
+      <p class="muted">{{ kitten.readiness_label }}. {{ kitten.delivery_notes }}</p>
+
+      {% if kitten.care_info_confirmed %}
+      <h2>Health and care</h2>
+      <ul class="checks reveal" data-observe>
+        {% for ok, label in health_items %}<li class="{% if not ok %}no{% endif %}" style="--i:{{ forloop.counter0 }}"><span class="tick">{% if ok %}{% include "partials/tick_small.html" %}{% endif %}</span>{{ label }}{% if not ok %} (not yet){% endif %}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <h2>Health and care details</h2>
+      <p>Health, care, and household-suitability details for this kitten are being confirmed. Please contact us for current information before making a decision.</p>
+      {% endif %}
+
+      {% if kitten.litter %}
+      <h2>Meet the parents</h2>
+      <div class="parents">
+        <div class="parent">{% if kitten.litter.dam_photo %}<img src="{{ kitten.litter.dam_photo.url }}" alt="{{ kitten.litter.dam_name }}, mother of {{ kitten.name }}" width="84" height="84" loading="lazy">{% else %}<span class="avatar" aria-hidden="true">{{ kitten.litter.dam_name|slice:":1" }}</span>{% endif %}<div><h3>{{ kitten.litter.dam_name }}</h3><p>Mother{% if kitten.litter.dam_description %}. {{ kitten.litter.dam_description }}{% endif %}</p></div></div>
+        <div class="parent">{% if kitten.litter.sire_photo %}<img src="{{ kitten.litter.sire_photo.url }}" alt="{{ kitten.litter.sire_name }}, father of {{ kitten.name }}" width="84" height="84" loading="lazy">{% else %}<span class="avatar" aria-hidden="true">{{ kitten.litter.sire_name|slice:":1" }}</span>{% endif %}<div><h3>{{ kitten.litter.sire_name }}</h3><p>Father{% if kitten.litter.sire_description %}. {{ kitten.litter.sire_description }}{% endif %}</p></div></div>
+      </div>
+      {% endif %}
+    </div>
+    <aside class="aside-card">
+      <h2>Questions about {{ kitten.name }}?</h2>
+      <p>Ask for a live video visit, more photos, or the health guarantee terms before you decide.</p>
+      <p><a class="btn btn-gold btn-block" href="{% url 'core:contact' %}">Contact us</a></p>
+      <p style="margin:0;font-size:.95rem"><a href="{% url 'core:breed_guide' %}" style="color:var(--gold-bright)">Read the honest Munchkin breed guide</a></p>
+    </aside>
+  </div>
+</section>
+
+{% if approved_testimonials %}
+<section class="section section-tint"><div class="container">
+  <h2>What families say</h2>
+  <div class="review-grid">{% for t in approved_testimonials %}<figure class="review-card" style="margin:0">{% include "partials/stars.html" with rating=t.rating %}<blockquote>&ldquo;{{ t.body }}&rdquo;</blockquote><figcaption><cite>{{ t.author_name }}</cite></figcaption></figure>{% endfor %}</div>
+</div></section>
+{% endif %}
+
+{% if litter_mates %}
+<section class="section"><div class="container"><h2>{{ kitten.name }}'s littermates</h2><div class="kitten-grid">{% for kitten in litter_mates %}{% include "partials/kitten_card.html" %}{% endfor %}</div></div></section>
+{% endif %}
+{% if similar_kittens %}
+<section class="section section-tint"><div class="container"><h2>More kittens you may love</h2><div class="kitten-grid">{% for kitten in similar_kittens %}{% include "partials/kitten_card.html" %}{% endfor %}</div></div></section>
+{% endif %}
+
+{% if kitten.is_open %}
+<div class="mobile-bar" role="region" aria-label="Reserve {{ kitten.name }}"><span class="mb-price">${{ kitten.price|floatformat:0|intcomma }}</span><a class="btn btn-gold" href="{% url 'reservations:create' kitten.slug %}">Reserve {{ kitten.name }}</a></div>
+{% endif %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/gallery.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,10 @@
+Django==5.2.6
+djangorestframework==3.16.1
+django-filter==26.1
+django-storages[s3]==1.14.6
+boto3==1.43.66
+Pillow==12.1.1
+python-decouple==3.8
+gunicorn==23.0.0
+whitenoise==6.8.2
+psycopg[binary]==3.2.3

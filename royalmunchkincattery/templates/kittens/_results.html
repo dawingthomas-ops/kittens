@@ -1,0 +1,14 @@
+<div class="results-bar">
+  <p class="results-count">{{ total_count }} kitten{{ total_count|pluralize }} found{% if has_filters %} <a class="link-btn" href="{% url 'kittens:list' %}" style="margin-left:.6rem;font-weight:500">Clear filters</a>{% endif %}</p>
+</div>
+<div class="kitten-grid">
+  {% for kitten in kittens %}{% include "partials/kitten_card.html" %}
+  {% empty %}<p class="empty-state">No kittens match those filters right now. Try widening your search, or <a href="{% url 'core:waitlist' %}">join the waitlist</a> and we will email you when one arrives.</p>{% endfor %}
+</div>
+{% if is_paginated %}
+<nav class="pager" aria-label="Pagination">
+  {% if page_obj.has_previous %}<a class="btn btn-ghost btn-sm" data-page href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" rel="prev">Previous</a>{% endif %}
+  <span class="muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}<a class="btn btn-ghost btn-sm" data-page href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.next_page_number }}" rel="next">Next</a>{% endif %}
+</nav>
+{% endif %}

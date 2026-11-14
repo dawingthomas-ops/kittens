@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load seo %}
+{% block structured_data %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Munchkin Cat Breed Guide: Size, Temperament, Health and Care","description":"{{ meta_description|escapejs }}","mainEntityOfPage":"{{ SITE_URL }}/munchkin-cat-breed-guide/","image":"{{ SITE_URL }}/static/img/og-default.png","author":{"@type":"Organization","name":"{{ SITE_NAME|escapejs }}"},"publisher":{"@id":"{{ SITE_URL }}/#organization"}}</script>
+{% endblock %}
+{% block content %}
+<article class="section"><div class="container prose-grid">
+  <div class="prose article">
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Munchkin cat breed guide</h1>
+    <p class="lede">Everything a first-time owner should know about Munchkin cats: where they come from, what they are like to live with, and the health questions every buyer should ask.</p>
+
+    <h2 id="origin">Origin of the breed</h2>
+    <p>Short-legged cats have appeared naturally for decades. The modern Munchkin breed grew from a short-legged cat found in Louisiana in the 1980s, and breeders developed it from there. The name nods to the Munchkins of <em>The Wizard of Oz</em>.</p>
+
+    <h2 id="size">Size and appearance</h2>
+    <p>Munchkins are small to medium cats with a normal-length body and short legs. Most females weigh about 5 to 7 pounds and most males 6 to 9 pounds. They come in every coat length, color and pattern, including tabby, calico, solid, bi-color and colorpoint.</p>
+
+    <h2 id="leg-lengths">The three leg lengths</h2>
+    <ul>
+      <li><strong>Standard:</strong> noticeably shorter legs than most cats.</li>
+      <li><strong>Super short, or "rug hugger":</strong> the shortest legs.</li>
+      <li><strong>Non-standard:</strong> normal-length legs, even though both parents were Munchkins.</li>
+    </ul>
+
+    <h2 id="temperament">Personality and temperament</h2>
+    <p>Munchkins are known for being curious, social and playful. They tend to follow their people around, investigate everything and enjoy interactive toys. Many get along well with children and with cat-friendly dogs when introduced gradually.</p>
+
+    <h2 id="jumping">Can Munchkins run and jump?</h2>
+    <p>Yes. They are quick sprinters and enthusiastic climbers, though they will not leap as high as long-legged cats. Give them low cat trees, pet steps and ramps.</p>
+
+    <h2 id="health">Health: the honest picture</h2>
+    <p>The short-leg trait comes from a dominant gene. Kittens that inherit two copies do not survive, so responsible breeders never pair two Munchkins together. Some cat registries decline to recognize the breed because of concerns that the gene may affect the skeleton, while others, including TICA, do recognize it.</p>
+    <p>Short-legged cats may be more prone to conditions such as spinal curvature (lordosis), a sunken chest (pectus excavatum) and joint wear. Many Munchkins never develop these problems, but long-term research is limited. The best protection is a responsible breeder, a lean body weight and regular veterinary care.</p>
+
+    <h2 id="care">Everyday care</h2>
+    <ul>
+      <li><strong>Weight:</strong> keep your cat lean. Measure meals and limit treats.</li>
+      <li><strong>Home setup:</strong> add ramps or steps and a low-entry litter box.</li>
+      <li><strong>Grooming:</strong> weekly for shorthair, two to three times a week for longhair.</li>
+      <li><strong>Vet care:</strong> yearly exams, dental checks and vaccinations as advised.</li>
+    </ul>
+
+    <h2 id="choose">How to choose a responsible breeder</h2>
+    <p>Ask to see the parents and the living space, request written health records and a guarantee, and make sure kittens are at least 12 weeks old before they go home. Be wary of anyone who rushes you or refuses video visits. We welcome every one of these questions.</p>
+    <p>See our <a href="{% url 'core:faq' %}">FAQ</a>, read the <a href="{% url 'core:journal_list' %}">care journal</a>, or <a href="{% url 'kittens:list' %}">meet the kittens</a> available now.</p>
+  </div>
+  <aside class="aside-card"><h2>On this page</h2>
+    <ul class="link-list" style="gap:.3rem"><li><a href="#origin">Origin</a></li><li><a href="#size">Size</a></li><li><a href="#leg-lengths">Leg lengths</a></li><li><a href="#temperament">Temperament</a></li><li><a href="#health">Health</a></li><li><a href="#care">Care</a></li><li><a href="#choose">Choosing a breeder</a></li></ul></aside>
+</div>
+{% if featured_kittens %}<div class="container" style="margin-top:3rem"><h2>Available now</h2><div class="kitten-grid">{% for kitten in featured_kittens %}{% include "partials/kitten_card.html" %}{% endfor %}</div></div>{% endif %}
+</article>
+{% endblock %}

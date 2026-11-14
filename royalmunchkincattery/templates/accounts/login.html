@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Administrator login | {{ SITE_NAME }}{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+{% block content %}
+<section class="section"><div class="container" style="max-width:460px">
+  <h1 style="font-size:2.4rem">Administrator sign in</h1>
+  <p class="lede">Private access for the site administrator.</p>
+  <form class="card" method="post" novalidate>
+    {% csrf_token %}
+    {% if form.errors %}<div class="form-banner" role="alert">Sign-in failed. Check your administrator credentials and try again.</div>{% endif %}
+    <div class="field-group"><label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}</div>
+    <div class="field-group"><label for="{{ form.password.id_for_label }}">Password</label>{{ form.password }}</div>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+</div></section>
+{% endblock %}

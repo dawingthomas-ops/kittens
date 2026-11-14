@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section"><div class="container narrow prose">
+  <h1>Privacy policy</h1>
+  <p class="muted">Last updated {% now "F j, Y" %}. This is a plain-language starting template. Have it reviewed by a qualified professional to confirm it fits how you operate.</p>
+  <h2>What we collect</h2>
+  <p>When you reserve a kitten, join the waitlist, send a message or leave a review, we collect the details you type: name, email, phone, city and state, delivery preference and your message. We also record basic technical data such as your IP address to prevent abuse, and anonymous page views to understand which pages are useful.</p>
+  <h2>How we use it</h2>
+  <p>We use your details to answer you, process reservations, arrange delivery and send updates you asked for. We do not sell your information.</p>
+  <h2>Saved kittens</h2>
+  <p>Kittens you save with the heart button are stored only in your browser on your device.</p>
+  <h2>Analytics and cookies</h2>
+  <p>We use essential cookies to keep the site secure. If analytics such as Google Analytics are enabled, they may set cookies to measure traffic.</p>
+  <h2>Reviews</h2>
+  <p>Reviews you submit may be published on this site after approval, along with the name and city you provide.</p>
+  <h2>Your choices</h2>
+  <p>You can ask us to access, correct or delete your information at any time by emailing <a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a>.</p>
+</div></section>
+{% endblock %}

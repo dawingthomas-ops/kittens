@@ -1,0 +1,34 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load static humanize %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<div class="dash-heading"><div><p class="eyebrow">Administrator workspace</p><h1>Overview</h1><p class="muted">Manage kittens, reservations, journal content, and customer enquiries.</p></div><div class="row"><a class="btn gold" href="{% url 'dashboard:kitten_create' %}">Add kitten</a><a class="btn" href="{% url 'dashboard:post_create' %}">Write a post</a></div></div>
+<div class="kpis">
+  <div class="kpi"><b>{{ total_kittens_available }}</b><span>Kittens available</span></div>
+  <div class="kpi"><b>{{ total_reservations_30d }}</b><span>Reservations, last 30 days</span></div>
+  <div class="kpi"><b>${{ pipeline_value|floatformat:0|intcomma }}</b><span>Open pipeline value</span></div>
+  <div class="kpi"><b>{{ page_views_30d }}</b><span>Kitten page views, 30 days</span></div>
+  {% if user.is_superuser or perms.reviews.change_testimonial %}<div class="kpi"><b>{{ pending_testimonials }}</b><span>Reviews awaiting approval</span></div>{% endif %}
+  <div class="kpi"><b>{{ unhandled_messages }}</b><span>Unhandled messages</span></div>
+  <div class="kpi"><b>{{ waitlist_waiting }}</b><span>Waitlist not yet contacted</span></div>
+  <div class="kpi"><b>{{ published_posts }}</b><span>Published journal posts</span><small>{{ draft_posts }} draft{{ draft_posts|pluralize }}</small></div>
+</div>
+<div class="quick-actions" aria-label="Content management">
+  <a href="{% url 'dashboard:kittens' %}"><b>Manage kittens</b><span>Photos, availability, pricing, and profile details</span></a>
+  <a href="{% url 'dashboard:posts' %}"><b>Manage journal</b><span>Create, edit, publish, or remove site posts</span></a>
+  <a href="{% url 'dashboard:reservations' %}"><b>Review reservations</b><span>Follow up and update reservation status</span></a>
+</div>
+<div class="grid2">
+  <div class="panel"><h2>Kitten page views, last 14 days</h2><div class="chart-box"><canvas id="viewsTrendChart" data-analytics-url="{% url 'dashboard:analytics_json' %}"></canvas></div></div>
+  <div class="panel"><h2>Reservations by status</h2><div class="chart-box"><canvas id="statusBreakdownChart" data-analytics-url="{% url 'dashboard:analytics_json' %}"></canvas></div></div>
+</div>
+<div class="grid2">
+  <div class="panel"><h2>Latest reservations</h2>
+    <table class="t"><thead><tr><th>Customer</th><th>Kitten</th><th>Status</th><th>Received</th></tr></thead><tbody>
+    {% for r in recent_reservations %}<tr><td><a href="{% url 'dashboard:reservation_edit' r.pk %}">{{ r.full_name }}</a></td><td>{{ r.kitten.name }}</td><td><span class="pill">{{ r.get_status_display }}</span></td><td class="muted">{{ r.created_at|naturaltime }}</td></tr>
+    {% empty %}<tr><td colspan="4" class="muted">No reservations yet.</td></tr>{% endfor %}</tbody></table></div>
+  <div class="panel"><h2>Most viewed kittens</h2>
+    <table class="t"><tbody>{% for k in top_kittens %}<tr><td>{{ k.name }}</td><td class="muted">{{ k.view_count }} views</td></tr>{% empty %}<tr><td class="muted">No kittens yet.</td></tr>{% endfor %}</tbody></table></div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script><script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

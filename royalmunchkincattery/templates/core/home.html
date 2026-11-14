@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block structured_data %}
+{% include "partials/schema_org.html" %}
+{% with faqs=faqs %}{% include "partials/faq_schema.html" %}{% endwith %}
+{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      {% if available_count %}<a class="hero-live reveal-seq" style="--s:0" href="{% url 'kittens:list' %}"><span class="pulse-dot" aria-hidden="true"></span>{{ available_count }} kitten{{ available_count|pluralize }} available to reserve</a>{% endif %}
+      <h1 class="reveal-seq" style="--s:1">Munchkin kittens for sale, raised like royalty</h1>
+      <p class="lede reveal-seq" style="--s:2">Munchkin kittens with individual profiles, current availability, and clear pricing from ${{ MIN_PRICE }} to ${{ MAX_PRICE|intcomma }}. Health and readiness details are shown on each kitten's page.</p>
+      <div class="btn-row reveal-seq" style="--s:3">
+        <a class="btn btn-gold" href="{% url 'kittens:list' %}">Meet the kittens</a>
+        <a class="btn btn-ghost" href="{% url 'kittens:match' %}">Find my match in 2 minutes</a>
+      </div>
+      <ul class="hero-trust reveal-seq" style="--s:4">
+        <li>{% include "partials/tick.html" %}Individual kitten profiles</li>
+        <li>{% include "partials/tick.html" %}Clear availability and readiness</li>
+        <li>{% include "partials/tick.html" %}Photos of each listed kitten</li>
+        {% if site_settings.kittens_placed_count %}<li>{% include "partials/tick.html" %}<span><b data-count="{{ site_settings.kittens_placed_count }}">{{ site_settings.kittens_placed_count }}</b> kittens placed</span></li>{% endif %}
+      </ul>
+    </div>
+    {% include "partials/hero_cat.html" %}
+  </div>
+</section>
+
+<section class="section section-dark" aria-labelledby="price-h">
+  <div class="container price-band">
+    <div class="reveal">
+      <span class="kicker" style="color:var(--gold-bright);font-weight:600">One honest price band</span>
+      <h2 id="price-h" class="visually-hidden">Transparent Munchkin kitten pricing</h2>
+      <p class="price-big" aria-label="${{ MIN_PRICE }} to ${{ MAX_PRICE|intcomma }}">${{ MIN_PRICE }}<span> to </span>${{ MAX_PRICE|intcomma }}</p>
+      <p>Color, coat and pattern never turn into a bidding war. Every kitten sits inside this range, with current availability and care details shown on its profile.</p>
+      <a class="btn btn-light" href="{% url 'core:landing' slug='affordable-munchkin-kittens' %}">How we price our kittens</a>
+    </div>
+    <ul class="included reveal">
+      <li>{% include "partials/tick.html" %}<span>Care status<small>Confirmed or marked as pending on each profile</small></span></li>
+      <li>{% include "partials/tick.html" %}<span>Readiness timing<small>Shown when birth or go-home dates are confirmed</small></span></li>
+      <li>{% include "partials/tick.html" %}<span>Individual photos<small>See multiple views of the listed kitten</small></span></li>
+      <li>{% include "partials/tick.html" %}<span>Transparent pricing<small>Exact kitten price shown before you inquire</small></span></li>
+      <li>{% include "partials/tick.html" %}<span>Reservation details<small>Confirm timing and terms with us before paying</small></span></li>
+      <li>{% include "partials/tick.html" %}<span>Delivery options<small>Discussed and confirmed before commitment</small></span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="featured-h">
+  <div class="container">
+    <div class="section-head row">
+      <div><span class="kicker">Ready for homes</span><h2 id="featured-h" style="margin:0">Meet our kittens</h2></div>
+      <a class="btn btn-ghost btn-sm" href="{% url 'kittens:list' %}">See every kitten</a>
+    </div>
+    <div class="kitten-grid reveal">
+      {% for kitten in featured_kittens %}{% include "partials/kitten_card.html" %}
+      {% empty %}<p class="empty-state">Our next litter is on the way. <a href="{% url 'core:waitlist' %}">Join the waitlist</a> to hear first.</p>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" aria-labelledby="legs-h">
+  <div class="container">
+    <div class="section-head"><span class="kicker">The breed, plainly</span><h2 id="legs-h">Leg length, explained</h2>
+      <p class="lede">Munchkin legs come in three lengths. Knowing the difference helps you choose with your eyes open. Photos are representative; each kitten listing has its own photos.</p></div>
+    <div class="legs">
+      <article class="leg-card reveal">
+        <img class="leg-photo" src="{% static 'img/cat-tabby.jpg' %}" alt="A real ginger cat looking up" width="1000" height="640" loading="lazy">
+        <h3>Standard short legs</h3><p>The classic Munchkin: legs noticeably shorter than a typical cat, still agile and quick. Most of our kittens are this type.</p>
+      </article>
+      <article class="leg-card reveal">
+        <img class="leg-photo" src="{% static 'img/cat-orange.jpg' %}" alt="A real tabby cat sitting on a soft surface" width="1000" height="640" loading="lazy">
+        <h3>Super short ("rug hugger")</h3><p>The shortest legs, with the most waddle. Adorable, and worth extra care with ramps, weight and vet checks.</p>
+      </article>
+      <article class="leg-card reveal">
+        <img class="leg-photo" src="{% static 'img/cat-relaxed.jpg' %}" alt="A real brown tabby cat sitting on steps" width="1000" height="640" loading="lazy">
+        <h3>Non-standard (normal legs)</h3><p>Born to Munchkin parents but without the short-leg gene. Same sweet nature, and a good choice if you prefer a typical cat build.</p>
+      </article>
+    </div>
+    <p style="margin-top:1.4rem"><a href="{% url 'core:breed_guide' %}">Read the full, balanced breed guide</a>, including health considerations.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="journey-h">
+  <div class="container">
+    <div class="section-head"><span class="kicker">From first look to first night</span><h2 id="journey-h">How adopting works</h2></div>
+    <div class="journey">
+      {% for title, text in journey_steps %}<div class="journey-step"><h3>{{ title }}</h3><p>{{ text }}</p></div>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="match-band reveal">
+      <div>
+        <h2>Not sure which kitten is yours?</h2>
+        <p>Answer six quick questions about your home, then see the kittens whose personality, coat and price fit best.</p>
+        <div class="btn-row"><a class="btn btn-gold" href="{% url 'kittens:match' %}">Take the match quiz</a></div>
+      </div>
+      <div class="match-meter" aria-hidden="true">
+        <div class="meter-row"><b>Calm lap cat <span>96%</span></b><div class="meter-bar"><i style="--w:96"></i></div></div>
+        <div class="meter-row"><b>Great with kids <span>88%</span></b><div class="meter-bar"><i style="--w:88"></i></div></div>
+        <div class="meter-row"><b>Within budget <span>100%</span></b><div class="meter-bar"><i style="--w:100"></i></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if testimonials %}
+<section class="section section-tint" aria-labelledby="reviews-h">
+  <div class="container">
+    <div class="section-head row"><div><span class="kicker">Verified reviews</span><h2 id="reviews-h" style="margin:0">Families who brought a kitten home</h2></div><a class="btn btn-ghost btn-sm" href="{% url 'reviews:list' %}">Read all reviews</a></div>
+    <div class="review-grid">
+      {% for t in testimonials %}
+      <figure class="review-card reveal" style="margin:0">
+        {% include "partials/stars.html" with rating=t.rating %}
+        <blockquote>&ldquo;{{ t.body }}&rdquo;</blockquote>
+        <figcaption><footer>{% if t.photo %}<img class="avatar" src="{{ t.photo.url }}" alt="" width="44" height="44" loading="lazy">{% else %}<span class="avatar" aria-hidden="true">{{ t.author_name|slice:":1" }}</span>{% endif %}<div><cite>{{ t.author_name }}</cite><small>{{ t.author_city_state }}</small></div></footer></figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if recent_posts %}
+<section class="section" aria-labelledby="journal-h">
+  <div class="container">
+    <div class="section-head row"><div><span class="kicker">Care journal</span><h2 id="journal-h" style="margin:0">Know before you adopt</h2></div><a class="btn btn-ghost btn-sm" href="{% url 'core:journal_list' %}">All articles</a></div>
+    <div class="post-grid">{% for post in recent_posts %}{% include "partials/post_card.html" %}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section section-tint" aria-labelledby="faq-h">
+  <div class="container narrow">
+    <div class="section-head"><h2 id="faq-h">Questions people ask first</h2></div>
+    {% include "partials/faq_list.html" %}
+    <p style="margin-top:1.4rem"><a href="{% url 'core:faq' %}">See all questions and answers</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div><h2>Don't see your kitten yet?</h2><p>Tell us the coat, color and personality you love and we will email you first when a matching kitten arrives.</p></div>
+      <div class="btn-row"><a class="btn btn-primary" href="{% url 'core:waitlist' %}">Join the waitlist</a><a class="btn btn-ghost" href="{% url 'core:contact' %}">Ask a question</a></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block structured_data %}{% if review_count %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"{{ SITE_URL }}/#organization","name":"{{ SITE_NAME|escapejs }}","url":"{{ SITE_URL }}/","aggregateRating":{"@type":"AggregateRating","ratingValue":"{{ average_rating|floatformat:1 }}","reviewCount":{{ review_count }},"bestRating":5}}</script>{% endif %}{% endblock %}
+{% block content %}
+<section class="section"><div class="container">
+  <div class="review-hero">
+    <div class="review-hero-copy">
+      <span class="kicker">Real families. Honest experiences.</span>
+      <h1>Your kitten story could help another family find their match.</h1>
+      <p class="lede">If you have adopted from Royal Munchkin Cattery, tell us what the experience was like—from your first conversation to the first days at home. Your honest words help future families make an informed choice.</p>
+      <ul class="review-promises">
+        <li>Your review stays in your own words.</li>
+        <li>Adding a photo is completely optional.</li>
+        <li>An authorized administrator reviews every submission before it is published.</li>
+      </ul>
+      <a class="btn btn-gold" href="{% url 'reviews:submit' %}">Share your experience</a>
+    </div>
+    <figure class="review-hero-photo">
+      <img src="{% static 'img/review-family.jpg' %}" alt="A couple holding a kitten at home" width="768" height="851" fetchpriority="high">
+      <figcaption>A special moment with a kitten at home.</figcaption>
+    </figure>
+  </div>
+  {% if review_count %}<p class="rating-summary">{% include "partials/stars.html" with rating=average_rating %} Average {{ average_rating|floatformat:1 }} from {{ review_count }} approved review{{ review_count|pluralize }}</p>{% endif %}
+  <p class="lede review-transparency">Reviews are submitted by customers and published only after admin approval. We do not create or rewrite customer reviews.</p>
+  <section class="family-gallery" aria-labelledby="family-gallery-heading">
+    <div class="section-head">
+      <span class="kicker">Little moments, big memories</span>
+      <h2 id="family-gallery-heading">Families and their kittens</h2>
+      <p class="lede">A gallery of family-and-kitten photos. These images are not review quotes; customer reviews are submitted separately and shown only after approval.</p>
+    </div>
+    <div class="family-gallery-grid">
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-01.jpg' %}" alt="A family sitting together in a car with a kitten" width="1080" height="607" loading="lazy" decoding="async">
+        <figcaption>A family together with a kitten in the car.</figcaption>
+      </figure>
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-02.jpg' %}" alt="A couple holding a kitten at a pet shop" width="768" height="1025" loading="lazy" decoding="async">
+        <figcaption>A couple holds a kitten at a pet shop.</figcaption>
+      </figure>
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-03.jpg' %}" alt="A woman holding her kitten outdoors" width="768" height="1025" loading="lazy" decoding="async">
+        <figcaption>A quiet outdoor cuddle with a kitten.</figcaption>
+      </figure>
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-04.jpg' %}" alt="A couple each holding a kitten at home" width="768" height="1025" loading="lazy" decoding="async">
+        <figcaption>A couple holds two kittens at home.</figcaption>
+      </figure>
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-05.jpg' %}" alt="A couple holding a kitten together outdoors" width="768" height="1025" loading="lazy" decoding="async">
+        <figcaption>A couple holding a kitten outdoors.</figcaption>
+      </figure>
+      <figure class="family-gallery-card">
+        <img src="{% static 'img/reviews/family-06.jpg' %}" alt="A woman holding a kitten beside a car" width="768" height="768" loading="lazy" decoding="async">
+        <figcaption>A kitten held beside a car.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <div class="review-grid" style="margin-top:2rem">
+    {% for t in testimonials %}
+    <figure class="review-card reveal" style="margin:0">
+      {% include "partials/stars.html" with rating=t.rating %}
+      <blockquote>&ldquo;{{ t.body }}&rdquo;</blockquote>
+      <figcaption><footer>{% if t.photo %}<img class="avatar" src="{{ t.photo.url }}" alt="" width="44" height="44" loading="lazy">{% else %}<span class="avatar" aria-hidden="true">{{ t.author_name|slice:":1" }}</span>{% endif %}<div><cite>{{ t.author_name }}</cite><small>{{ t.author_city_state }}{% if t.kitten %} &middot; adopted {{ t.kitten.name }}{% endif %}</small></div></footer></figcaption>
+    </figure>
+    {% empty %}
+    <p class="empty-state">No reviews have been published yet. If you have adopted from us, we would love to hear how your kitten is doing.</p>
+    {% endfor %}
+  </div>
+  <div class="btn-row" style="margin-top:2.4rem"><a class="btn btn-primary" href="{% url 'reviews:submit' %}">Share your experience</a></div>
+</div></section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section"><div class="container narrow">
+  <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Join the waitlist</h1>
+  <p class="lede">Tell us the coat, color and personality you love. Waitlist families hear about new litters first.</p>
+  <form class="card" method="post" novalidate data-loading="Joining..." style="margin-top:1.6rem">
+    {% csrf_token %}
+    {% if form.errors %}<div class="form-banner">Please fix the highlighted fields.</div>{% endif %}
+    <div class="hp-field" aria-hidden="true"><label for="id_website">Website</label>{{ form.website }}</div>
+    <div class="field-group"><label for="id_name">Your name</label>{{ form.name }}{{ form.name.errors }}</div>
+    <div class="field-group"><label for="id_email">Email</label>{{ form.email }}{{ form.email.errors }}</div>
+    <div class="field-group"><label for="id_phone">Phone <span class="muted">(optional)</span></label>{{ form.phone }}{{ form.phone.errors }}</div>
+    <div class="field-group"><span class="field-label">Gender preference</span><div class="choice-row">{% for radio in form.preferred_gender %}<label>{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div></div>
+    <div class="field-group"><span class="field-label">Coat preference</span><div class="choice-row">{% for radio in form.preferred_coat_length %}<label>{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>{% endfor %}</div></div>
+    <div class="field-group"><label for="id_preferred_colors">Colors you love</label>{{ form.preferred_colors }}</div>
+    <div class="field-group"><label for="id_notes">Anything else?</label>{{ form.notes }}</div>
+    <button class="btn btn-gold" type="submit" data-loading="Joining...">Join the waitlist</button>
+  </form>
+</div></section>
+{% endblock %}

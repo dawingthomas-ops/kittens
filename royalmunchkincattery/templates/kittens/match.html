@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block content %}
+<section class="section-tight">
+  <div class="container narrow center">
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Find your Munchkin match</h1>
+    <p class="lede">Six questions about your home. We score every available kitten on the answers you give, and show you exactly why each one fits.</p>
+  </div>
+</section>
+{% if searched %}
+<section class="section-tight">
+  <div class="container narrow">
+    <h2>Your best matches</h2>
+    {% for m in matches %}
+    <article class="match-result reveal">
+      <a href="{{ m.kitten.get_absolute_url }}">{% if m.kitten.cover_photo %}<img src="{{ m.kitten.cover_photo.url }}" alt="{{ m.kitten.alt_text }}" width="120" height="150" loading="lazy">{% endif %}</a>
+      <div>
+        <div class="match-pct">{{ m.percent }}<small>% match</small></div>
+        <h3><a href="{{ m.kitten.get_absolute_url }}" style="color:var(--ink);text-decoration:none">{{ m.kitten.name }}</a> <span class="muted" style="font-weight:500;font-size:1rem">${{ m.kitten.price|floatformat:0|intcomma }}</span></h3>
+        {% if m.reasons %}<ul>{% for r in m.reasons %}<li>{{ r|capfirst }}</li>{% endfor %}</ul>{% endif %}
+        <a class="btn btn-primary btn-sm" href="{{ m.kitten.get_absolute_url }}">Meet {{ m.kitten.name }}</a>
+      </div>
+    </article>
+    {% empty %}
+    <p class="empty-state">No kittens are open right now. <a href="{% url 'core:waitlist' %}">Join the waitlist</a> and tell us what you are looking for.</p>
+    {% endfor %}
+    <p class="muted" style="margin-top:1.4rem">Want to change an answer? Retake the quiz below. Scores are simple points: coat 20, personality 30, kids 15, pets 15, gender 10, budget 10.</p>
+  </div>
+</section>
+{% endif %}
+<section class="section" {% if searched %}id="retake"{% endif %}>
+  <div class="container narrow">
+    <div class="steps-bar" hidden aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <form id="quiz-form" class="quiz" method="get" action="{% url 'kittens:match' %}">
+      <input type="hidden" name="go" value="1">
+      <div class="quiz-q"><fieldset><legend>What coat do you picture?</legend><div class="big-choices">
+        <label class="big-choice"><input type="radio" name="coat" value="shorthair"><span><b>Shorthair</b><small>Sleek, weekly brushing</small></span></label>
+        <label class="big-choice"><input type="radio" name="coat" value="longhair"><span><b>Longhair</b><small>Fluffy, brush a few times a week</small></span></label>
+        <label class="big-choice"><input type="radio" name="coat" value="" checked><span><b>No preference</b><small>Surprise me</small></span></label></div></fieldset></div>
+      <div class="quiz-q"><fieldset><legend>What is your ideal kitten's energy?</legend><div class="big-choices">
+        <label class="big-choice"><input type="radio" name="energy" value="calm"><span><b>Calm lap cat</b><small>Snuggles first, zoomies second</small></span></label>
+        <label class="big-choice"><input type="radio" name="energy" value="playful"><span><b>Playful</b><small>Toys, tag and cuddles</small></span></label>
+        <label class="big-choice"><input type="radio" name="energy" value="adventurous"><span><b>Adventurous</b><small>Climbs, explores, leads</small></span></label></div></fieldset></div>
+      <div class="quiz-q"><fieldset><legend>Are there children at home?</legend><div class="big-choices">
+        <label class="big-choice"><input type="radio" name="kids" value="yes"><span><b>Yes</b><small>Kids of any age</small></span></label>
+        <label class="big-choice"><input type="radio" name="kids" value="no" checked><span><b>No</b><small>Adults only</small></span></label></div></fieldset></div>
+      <div class="quiz-q"><fieldset><legend>Other pets at home?</legend><div class="big-choices">
+        <label class="big-choice"><input type="radio" name="pets" value="yes"><span><b>Yes</b><small>Cats or friendly dogs</small></span></label>
+        <label class="big-choice"><input type="radio" name="pets" value="no" checked><span><b>No</b><small>Our kitten will be the star</small></span></label></div></fieldset></div>
+      <div class="quiz-q"><fieldset><legend>Boy, girl, or either?</legend><div class="big-choices">
+        <label class="big-choice"><input type="radio" name="gender" value="female"><span><b>Girl</b><small>Calicos and torties are nearly always girls</small></span></label>
+        <label class="big-choice"><input type="radio" name="gender" value="male"><span><b>Boy</b><small>Often goofy and affectionate</small></span></label>
+        <label class="big-choice"><input type="radio" name="gender" value="" checked><span><b>Either</b><small>Personality first</small></span></label></div></fieldset></div>
+      <div class="quiz-q"><fieldset><legend>What is your budget?</legend>
+        <div class="range-wrap"><input type="range" id="q-budget" name="budget" min="{{ MIN_PRICE }}" max="{{ MAX_PRICE }}" step="25" value="{{ MAX_PRICE }}" aria-label="Maximum budget"><output class="range-out" id="q-budget-out" for="q-budget">${{ MAX_PRICE|intcomma }}</output></div>
+        <p class="help-text">Every kitten is between ${{ MIN_PRICE }} and ${{ MAX_PRICE|intcomma }}.</p></fieldset></div>
+      <div class="step-nav"><button type="button" class="btn btn-ghost" data-back hidden>Back</button><button type="button" class="btn btn-primary" data-next hidden>Next</button><button type="submit" class="btn btn-gold" data-submit>Show my matches</button></div>
+    </form>
+  </div>
+</section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/quiz.js' %}" defer></script>{% endblock %}

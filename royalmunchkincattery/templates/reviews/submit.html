@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Share Your Review | Royal Munchkin Cattery{% endblock %}
+{% block meta_robots %}noindex, follow{% endblock %}
+{% block content %}
+<section class="section"><div class="container narrow">
+  <h1 style="font-size:clamp(2.1rem,1.4rem + 3vw,3.4rem)">Share your experience</h1>
+  <p class="lede">Tell your story in your own words. Your review stays private until an authorized administrator approves it for publication.</p>
+  <form class="card" method="post" enctype="multipart/form-data" novalidate data-loading="Sending..." style="margin-top:1.6rem">
+    {% csrf_token %}
+    <div class="hp-field" aria-hidden="true"><label for="id_website">Website</label>{{ form.website }}</div>
+    <div class="field-group"><label for="id_author_name">Your name</label>{{ form.author_name }}{{ form.author_name.errors }}</div>
+    <div class="field-group"><label for="id_author_city_state">City and state</label>{{ form.author_city_state }}{{ form.author_city_state.errors }}</div>
+    <div class="field-group"><label for="id_kitten">Which kitten did you adopt?</label>{{ form.kitten }}{{ form.kitten.errors }}</div>
+    <div class="field-group"><label for="id_rating">Rating</label>{{ form.rating }}{{ form.rating.errors }}</div>
+    <div class="field-group"><label for="id_body">Your review</label>{{ form.body }}<small class="muted">Share what stood out about your experience. Please use your own words.</small>{{ form.body.errors }}</div>
+    <div class="field-group"><label for="id_photo">Photo <span class="muted">(optional, under 5 MB)</span></label>{{ form.photo }}{{ form.photo.errors }}</div>
+    <div class="field-group review-consent">{{ form.confirm_customer }}<label for="id_confirm_customer">{{ form.confirm_customer.label }}</label>{{ form.confirm_customer.errors }}</div>
+    <button class="btn btn-gold" type="submit" data-loading="Sending...">Send review</button>
+  </form>
+</div></section>
+{% endblock %}

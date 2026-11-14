@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block structured_data %}{% include "partials/faq_schema.html" %}{% endblock %}
+{% block content %}
+<section class="section"><div class="container narrow">
+  <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">Munchkin cat questions, answered</h1>
+  <p class="lede" style="margin-bottom:2rem">Price, size, health, jumping, guarantees and delivery. Don't see yours? <a href="{% url 'core:contact' %}">Ask us</a>.</p>
+  {% include "partials/faq_list.html" %}
+</div></section>
+{% endblock %}

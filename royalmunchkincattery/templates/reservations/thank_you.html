@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Request received | Royal Munchkin Cattery{% endblock %}
+{% block meta_robots %}noindex, nofollow{% endblock %}
+{% block content %}
+<section class="section"><div class="container narrow center">
+  <svg class="big-check" viewBox="0 0 96 96" fill="none" stroke="#2B7A58" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="48" cy="48" r="46"/><path d="M28 50l14 14 27-30"/></svg>
+  {% if reservation %}
+    <h1 style="font-size:clamp(2.1rem,1.4rem + 3vw,3.4rem)">Your request for {{ kitten.name }} is saved.</h1>
+    <p class="lede">We emailed your reservation to Royal Munchkin Cattery and sent a confirmation from Gmail to {{ reservation.email }}. We’ll reply within one business day. A reservation request does not hold a kitten; the deposit and agreement must be confirmed with us.</p>
+    {% if message_channel == "sms" %}<div class="btn-row" style="justify-content:center;margin-top:1.6rem">
+        <a class="btn btn-gold" href="{{ sms_compose_url }}">Open prefilled text to our Google Voice number</a>
+    </div>{% endif %}
+    {% if message_channel == "sms" %}<p class="help-text" style="margin-top:1rem">The text link opens your device’s messaging app with our Google Voice number and request details filled in; tap Send there. Your request and email confirmation have already been sent, so you do not need to compose another email.</p>{% else %}<p class="help-text" style="margin-top:1rem">No need to send a second email. If you don’t see the confirmation, check your spam folder.</p>{% endif %}
+  {% else %}
+    <h1 style="font-size:clamp(2.1rem,1.4rem + 3vw,3.4rem)">Thanks for your interest in {{ kitten.name }}.</h1>
+    <p class="lede">To send a reservation request, please start from {{ kitten.name }}’s profile so your contact and delivery details can be included.</p>
+  {% endif %}
+  <div class="btn-row" style="justify-content:center;margin-top:1.6rem"><a class="btn btn-primary" href="{% url 'kittens:list' %}">Keep browsing</a><a class="btn btn-ghost" href="{% url 'core:journal_list' %}">Read our care guides</a></div>
+</div></section>
+{% endblock %}

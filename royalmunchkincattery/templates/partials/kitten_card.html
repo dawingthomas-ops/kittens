@@ -1,0 +1,26 @@
+{% load humanize %}
+<article class="kitten-card" data-tilt>
+  <div class="kc-photo">
+    <a class="kc-link" href="{{ kitten.get_absolute_url }}" aria-label="{{ kitten.name }}, {{ kitten.listing_title }}">
+      {% if kitten.cover_photo %}<img src="{{ kitten.cover_photo.url }}" alt="{{ kitten.alt_text }}" width="640" height="800" loading="lazy" decoding="async">{% endif %}
+    </a>
+    <span class="status status-{{ kitten.status }}">{{ kitten.get_status_display }}</span>
+    <button class="fav-btn" type="button" data-fav="{{ kitten.slug }}" aria-pressed="false" aria-label="Save {{ kitten.name }} to favorites">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.7 4.5 7 4.5c2 0 3.7 1.1 5 3 1.3-1.9 3-3 5-3 3.3 0 5.4 3.1 4.2 6.6-1.7 4.8-9.2 9.4-9.2 9.4z"/></svg>
+      <i class="fav-burst" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="kc-body">
+    <div class="kc-top">
+      <h3><a href="{{ kitten.get_absolute_url }}">{{ kitten.name }}</a></h3>
+      <span class="kc-price">${{ kitten.price|floatformat:0|intcomma }}</span>
+    </div>
+    <p class="kc-look">{{ kitten.look }} {{ kitten.get_coat_length_display|lower }} &middot; {% if kitten.gender == "unconfirmed" %}sex to be confirmed{% else %}{{ kitten.get_gender_display|lower }}{% endif %}</p>
+    <p class="kc-headline">{{ kitten.headline }}</p>
+    <ul class="chips">
+      {% if kitten.energy != "unconfirmed" %}<li>{{ kitten.get_energy_display }}</li>{% endif %}
+      <li>{{ kitten.age_label }}</li>
+      <li class="chip-ready{% if kitten.is_ready %} is-ready{% endif %}">{{ kitten.readiness_label }}</li>
+    </ul>
+  </div>
+</article>

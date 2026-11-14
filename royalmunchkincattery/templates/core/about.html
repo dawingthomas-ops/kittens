@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section"><div class="container prose-grid">
+  <div class="prose">
+    <h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">A small cattery, run with big care</h1>
+    <p class="lede">Royal Munchkin Cattery raises Munchkin kittens at home, in small litters, and tells families the whole truth about the breed.</p>
+    <h2>How we raise our kittens</h2>
+    <p>Our kittens are born in our living space and handled every day from their first week. They meet visitors, hear household noise and learn gentle manners long before they leave. A kitten who feels safe around people grows into a calm, confident companion.</p>
+    <h2>Honest about the breed</h2>
+    <p>Munchkins are delightful, and the short-leg gene is also debated. We breed Munchkin cats only to normal-leg cats, keep our kittens lean and give every family a written health guarantee. We would rather you ask hard questions now than be surprised later. Our <a href="{% url 'core:breed_guide' %}">breed guide</a> explains the details.</p>
+    <h2>Fair, transparent pricing</h2>
+    <p>Every kitten is priced between ${{ MIN_PRICE }} and $1,000. Color and coat never change the price band, and the vet care, vaccinations, microchip and guarantee are always included.</p>
+    <h2>What we promise</h2>
+    <ul>
+      <li>Kittens go home at 12 weeks or older, never earlier.</li>
+      <li>You can see your kitten, the parents and the living space on video before you commit.</li>
+      <li>Every kitten leaves with health records, a contract and lifetime breeder support.</li>
+      <li>If life changes and you can no longer keep your cat, call us first.</li>
+    </ul>
+    <div class="btn-row" style="margin-top:2rem"><a class="btn btn-gold" href="{% url 'kittens:list' %}">Meet the kittens</a><a class="btn btn-ghost" href="{% url 'core:contact' %}">Say hello</a></div>
+  </div>
+  <aside class="aside-card"><h2>Visit by appointment</h2><p>We host one family at a time so the kittens stay calm and healthy. Ask for a visit or a live video call.</p><p><a class="btn btn-gold btn-block" href="{% url 'core:contact' %}">Request a visit</a></p></aside>
+</div></section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% block title %}Edit review{% endblock %}
+{% block content %}
+<h1>Review moderation</h1>
+<section class="panel" style="max-width:700px;margin-bottom:1rem">
+  <p><b>{{ testimonial.author_name }}</b>{% if testimonial.author_city_state %} · {{ testimonial.author_city_state }}{% endif %} · {{ testimonial.rating }}/5</p>
+  <blockquote style="margin:0;white-space:pre-wrap">{{ testimonial.body }}</blockquote>
+</section>
+<form method="post" class="f panel" style="max-width:700px">{% csrf_token %}{{ form.non_field_errors }}
+  {% for field in form %}<div class="fld">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}
+  <div class="row"><button class="btn" type="submit">Save</button><a class="btn ghost" href="{% url 'dashboard:testimonials' %}">Cancel</a></div></form>
+{% endblock %}

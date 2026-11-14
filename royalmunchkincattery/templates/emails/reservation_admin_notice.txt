@@ -1,0 +1,17 @@
+New reservation inquiry for {{ reservation.kitten.name }}
+
+Customer: {{ reservation.full_name }}
+Email: {{ reservation.email }}
+Phone: {{ reservation.phone|default:"(none given)" }}
+Prefers: {{ reservation.get_contact_preference_display }}
+Location: {{ reservation.shipping_city }}, {{ reservation.shipping_state }}
+Delivery: {{ reservation.get_delivery_method_display }}
+Other pets: {{ reservation.has_other_pets|yesno:"Yes,No" }}
+
+Kitten: {{ reservation.kitten.name }} ({{ reservation.kitten.listing_title }}), ${{ reservation.kitten.price|floatformat:0 }}
+
+Message:
+{{ reservation.message|default:"(no message)" }}
+
+Open in dashboard: https://{{ SITE_DOMAIN }}/dashboard/reservations/
+Reply to this email to answer the customer directly.

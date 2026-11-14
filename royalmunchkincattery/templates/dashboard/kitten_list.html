@@ -1,0 +1,11 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load humanize %}
+{% block title %}Kittens{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between"><h1>Kittens</h1><a class="btn gold" href="{% url 'dashboard:kitten_create' %}">Add kitten</a></div>
+<div class="table-wrap"><table class="t"><thead><tr><th></th><th>Name</th><th>Look</th><th>Price</th><th>Status</th><th>Views</th><th></th></tr></thead><tbody>
+{% for k in kittens %}<tr><td>{% if k.cover_photo %}<img class="thumb-s" src="{{ k.cover_photo.url }}" alt="">{% endif %}</td><td><b>{{ k.name }}</b><br><span class="muted">{{ k.get_gender_display }}, {{ k.age_label }}, {{ k.get_leg_length_display }}</span></td><td>{{ k.look }}, {{ k.get_coat_length_display|lower }}</td><td>${{ k.price|floatformat:0|intcomma }}</td><td><span class="pill {% if k.status == 'available' %}ok{% elif k.status == 'reserved' %}warn{% endif %}">{{ k.get_status_display }}</span></td><td>{{ k.view_count }}</td>
+<td class="row"><a class="btn sm ghost" href="{{ k.get_absolute_url }}" target="_blank" rel="noopener">View</a><a class="btn sm ghost" href="{% url 'dashboard:kitten_update' k.pk %}">Edit</a><a class="btn sm danger" href="{% url 'dashboard:kitten_delete' k.pk %}">Delete</a></td></tr>
+{% empty %}<tr><td colspan="7" class="muted">No kittens yet. Add your first one.</td></tr>{% endfor %}</tbody></table></div>
+{% include "dashboard/_pager.html" %}
+{% endblock %}
