@@ -42,7 +42,7 @@ class KittenListView(ListView):
         ctx["querystring"] = params.urlencode()
         ctx["has_filters"] = any(v for k, v in params.items() if k != "ordering")
         ctx["total_count"] = self.filter.qs.count()
-        ctx["meta_title"] = "Available Munchkin Kittens | $800-$1,000 | Royal Munchkin Cattery"
+        ctx["meta_title"] = "Available Munchkin Kittens | $800-$1,000 | American Munchkin House"
         ctx["meta_description"] = (
             "Browse available Munchkin kittens priced from $800 to $1,000. View each kitten's photos, "
             "availability, and confirmed care details."
@@ -101,7 +101,7 @@ class KittenDetailView(DetailView):
             if kitten.litter_id
             else Kitten.objects.none()
         )
-        ctx["meta_title"] = f"{kitten.name}, {kitten.listing_title} | Royal Munchkin"
+        ctx["meta_title"] = f"{kitten.name}, {kitten.listing_title} | American Munchkin House"
         ctx["meta_description"] = (
             f"Meet {kitten.name}, a {kitten.look.lower()} {kitten.get_coat_length_display().lower()} Munchkin kitten, "
             f"priced at ${kitten.price:,.0f}. View photos, availability, and confirmed details."
@@ -144,7 +144,7 @@ class KittenMatchView(View):
             "answers": answers,
             "matches": matches,
             "searched": answers is not None,
-            "meta_title": "Kitten Match Quiz | Find Your Munchkin Kitten | Royal Munchkin",
+            "meta_title": "Kitten Match Quiz | Find Your Munchkin Kitten | American Munchkin House",
             "meta_description": "Answer six quick questions and we will match you with the Munchkin kitten whose personality, coat and price fit your home.",
             "breadcrumbs": [("Home", "/"), ("Kitten match", "/kitten-match/")],
         })
@@ -155,7 +155,7 @@ class FavoritesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Your Saved Kittens | Royal Munchkin Cattery"
+        ctx["meta_title"] = "Your Saved Kittens | American Munchkin House"
         ctx["meta_description"] = "The Munchkin kittens you saved, kept on this device."
         ctx["noindex"] = True
         return ctx

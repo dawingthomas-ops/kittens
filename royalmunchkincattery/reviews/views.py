@@ -23,8 +23,8 @@ class TestimonialListView(ListView):
         count = approved.count()
         ctx["review_count"] = count
         ctx["average_rating"] = (sum(t.rating for t in approved) / count) if count else 0
-        ctx["meta_title"] = "Munchkin Kitten Reviews | Royal Munchkin Cattery"
-        ctx["meta_description"] = "Read verified reviews from families who adopted a Munchkin kitten from Royal Munchkin Cattery."
+        ctx["meta_title"] = "Munchkin Kitten Reviews | American Munchkin House"
+        ctx["meta_description"] = "Read verified reviews from families who adopted a Munchkin kitten from American Munchkin House."
         ctx["breadcrumbs"] = [("Home", "/"), ("Reviews", "/reviews/")]
         return ctx
 

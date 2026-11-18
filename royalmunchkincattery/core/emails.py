@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
-logger = logging.getLogger("royalmunchkin")
+logger = logging.getLogger("americanmunchkinhouse")
 
 
 def _send(subject, body, to, reply_to=None):
@@ -47,7 +47,7 @@ def notify_admin_of_contact(message):
 def notify_contact_submission(message):
     admin_subject = f"New contact message: {message.subject or message.name}"
     admin_body = render_to_string("emails/contact_admin_notice.txt", {"m": message})
-    customer_subject = "We received your message | Royal Munchkin Cattery"
+    customer_subject = "We received your message | American Munchkin House"
     customer_body = render_to_string("emails/contact_customer_confirmation.txt", {"message": message})
     return _send_admin_and_customer(
         admin_subject,
@@ -66,4 +66,4 @@ def notify_admin_of_waitlist(entry):
 
 def confirm_waitlist(entry):
     body = render_to_string("emails/waitlist_customer_confirmation.txt", {"e": entry})
-    return _send("You're on the Royal Munchkin Cattery waitlist", body, [entry.email], [settings.ADMIN_NOTIFICATION_EMAIL])
+    return _send("You're on the American Munchkin House waitlist", body, [entry.email], [settings.ADMIN_NOTIFICATION_EMAIL])

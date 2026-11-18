@@ -15,7 +15,7 @@ urlpatterns = [
     path("contact/", views.ContactView.as_view(), name="contact"),
     path("contact/thank-you/", views.ThanksView.as_view(
         title="Message sent",
-        message="Thank you for reaching out. A confirmation was emailed to you from Royal Munchkin Cattery, and our team will reply within one business day. If you do not see the confirmation, check your spam folder."), name="contact_thanks"),
+        message="Thank you for reaching out. A confirmation was emailed to you from American Munchkin House, and our team will reply within one business day. If you do not see the confirmation, check your spam folder."), name="contact_thanks"),
     path("waitlist/", views.WaitlistView.as_view(), name="waitlist"),
     path("waitlist/thank-you/", views.ThanksView.as_view(
         title="You're on the waitlist",

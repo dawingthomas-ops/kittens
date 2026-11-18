@@ -1,5 +1,5 @@
 """
-WSGI config for Royal Munchkin Cattery.
+WSGI config for American Munchkin House.
 
 Mirrors the findapomsky setup: on platforms where the release step can be
 skipped (e.g. a recreated Render free instance with SQLite) the schema is

@@ -33,9 +33,11 @@ services:
       - key: SERVE_LOCAL_MEDIA
         value: "False"
       - key: DJANGO_ALLOWED_HOSTS
-        value: "royalmunchkincattery.com,www.royalmunchkincattery.com,royalmunchkincattery.onrender.com"
+        value: "americanmunchkinhouse.com,www.americanmunchkinhouse.com,royalmunchkincattery.onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://royalmunchkincattery.com,https://www.royalmunchkincattery.com,https://royalmunchkincattery.onrender.com"
+        value: "https://americanmunchkinhouse.com,https://www.americanmunchkinhouse.com,https://royalmunchkincattery.onrender.com"
+      - key: SITE_DOMAIN
+        value: americanmunchkinhouse.com
       - key: DB_ENGINE
         value: django.db.backends.postgresql
       - key: DB_NAME
@@ -71,7 +73,7 @@ services:
       - key: EMAIL_HOST_PASSWORD
         sync: false
       - key: DEFAULT_FROM_EMAIL
-        sync: false
+        value: "American Munchkin House <dawingthomas@gmail.com>"
       - key: ADMIN_NOTIFICATION_EMAIL
         sync: false
       - key: PYTHON_VERSION

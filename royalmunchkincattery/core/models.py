@@ -64,8 +64,8 @@ class SiteSettings(models.Model):
     """Singleton row holding editable business info so the phone number,
     location and social links can change without a code deploy."""
 
-    business_name = models.CharField(max_length=120, default="Royal Munchkin Cattery")
-    tagline = models.CharField(max_length=200, default="Home-raised Munchkin kittens with royal manners")
+    business_name = models.CharField(max_length=120, default="American Munchkin House")
+    tagline = models.CharField(max_length=200, default="Home-raised Munchkin kittens, raised with care")
     city = models.CharField(max_length=100, default="Dallas", help_text="Used in schema.org markup. Clear it to hide the address.")
     state = models.CharField(max_length=2, default="TX", blank=True)
     contact_phone = models.CharField(max_length=24, blank=True, help_text="Digits with country code, e.g. +15551234567")

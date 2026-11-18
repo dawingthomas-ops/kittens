@@ -5,7 +5,7 @@
   <div class="container nav-wrap">
     <a class="brand" href="{% url 'core:home' %}" aria-label="{{ SITE_NAME }} home">
       {% include "partials/logo.html" %}
-      <span class="brand-text"><b>Royal Munchkin</b><i>Cattery</i></span>
+      <span class="brand-text"><b>American Munchkin House</b></span>
     </a>
     <nav class="primary-nav" id="primary-nav" aria-label="Main">
       <a href="{% url 'kittens:list' %}" {% if request.resolver_match.app_name == 'kittens' and request.resolver_match.url_name != 'match' and request.resolver_match.url_name != 'favorites' %}aria-current="page"{% endif %}>Kittens</a>

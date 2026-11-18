@@ -1,5 +1,5 @@
 """
-Royal Munchkin Cattery — Django settings.
+American Munchkin House — Django settings.
 
 Same configuration approach as the findapomsky project: python-decouple for
 env-driven config, WhiteNoise for static files, optional AWS S3 media,
@@ -40,12 +40,12 @@ if not DEBUG and not TESTING and not BUILDING_OR_MANAGING:
         )
 ALLOWED_HOSTS = config(
     "DJANGO_ALLOWED_HOSTS",
-    default="royalmunchkincattery.com,www.royalmunchkincattery.com,*.onrender.com,localhost,127.0.0.1,0.0.0.0",
+    default="americanmunchkinhouse.com,www.americanmunchkinhouse.com,*.onrender.com,localhost,127.0.0.1,0.0.0.0",
     cast=Csv(),
 )
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
-    default="https://royalmunchkincattery.com,https://www.royalmunchkincattery.com,https://royalmunchkincattery.onrender.com",
+    default="https://americanmunchkinhouse.com,https://www.americanmunchkinhouse.com,https://royalmunchkincattery.onrender.com",
     cast=Csv(),
 )
 CSRF_TRUSTED_ORIGINS = [
@@ -161,7 +161,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "royal-munchkin",
+        "LOCATION": "american-munchkin-house",
     }
 }
 
@@ -199,7 +199,7 @@ SERVE_LOCAL_MEDIA = config("SERVE_LOCAL_MEDIA", default=DEBUG, cast=bool)
 if USE_S3:
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="")
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="")
-    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="royalmunchkin-media")
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="americanmunchkinhouse-media")
     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="us-east-1")
     AWS_S3_CUSTOM_DOMAIN = config(
         "AWS_S3_CUSTOM_DOMAIN",
@@ -253,7 +253,7 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 EMAIL_TIMEOUT = 10
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="Royal Munchkin Cattery <dawingthomas@gmail.com>")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="American Munchkin House <dawingthomas@gmail.com>")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Where every reservation, contact and waitlist notification is delivered.
@@ -269,9 +269,9 @@ KITTEN_MAX_PRICE = 1000
 # ---------------------------------------------------------------------------
 # Site-wide SEO defaults (used by core.context_processors.site_meta)
 # ---------------------------------------------------------------------------
-SITE_NAME = "Royal Munchkin Cattery"
-SITE_SHORT_NAME = "Royal Munchkin"
-SITE_DOMAIN = config("SITE_DOMAIN", default="royalmunchkincattery.com")
+SITE_NAME = "American Munchkin House"
+SITE_SHORT_NAME = "Munchkin House"
+SITE_DOMAIN = config("SITE_DOMAIN", default="americanmunchkinhouse.com")
 GOOGLE_SITE_VERIFICATION = config("GOOGLE_SITE_VERIFICATION", default="")
 BING_SITE_VERIFICATION = config("BING_SITE_VERIFICATION", default="")
 GA_MEASUREMENT_ID = config("GA_MEASUREMENT_ID", default="")  # e.g. G-XXXXXXXXXX or AW-XXXXXXXXX
@@ -280,7 +280,7 @@ WHATSAPP_NUMBER = config("WHATSAPP_NUMBER", default="")  # digits only, e.g. 155
 TWITTER_HANDLE = config("TWITTER_HANDLE", default="")
 
 SITE_DEFAULT_DESCRIPTION = (
-    "Royal Munchkin Cattery raises healthy, home-raised Munchkin kittens for sale at $800 to $1,000. "
+    "American Munchkin House raises healthy, home-raised Munchkin kittens for sale at $800 to $1,000. "
     "Vet-checked, vaccinated, microchipped, with a written health guarantee and safe delivery support."
 )
 SITE_DEFAULT_KEYWORDS = (
@@ -304,5 +304,5 @@ LOGGING = {
     "formatters": {"simple": {"format": "[{levelname}] {name}: {message}", "style": "{"}},
     "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "simple"}},
     "root": {"handlers": ["console"], "level": "WARNING"},
-    "loggers": {"royalmunchkin": {"handlers": ["console"], "level": "INFO", "propagate": False}},
+    "loggers": {"americanmunchkinhouse": {"handlers": ["console"], "level": "INFO", "propagate": False}},
 }

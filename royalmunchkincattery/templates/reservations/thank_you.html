@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Request received | Royal Munchkin Cattery{% endblock %}
+{% block title %}Request received | American Munchkin House{% endblock %}
 {% block meta_robots %}noindex, nofollow{% endblock %}
 {% block content %}
 <section class="section"><div class="container narrow center">
   <svg class="big-check" viewBox="0 0 96 96" fill="none" stroke="#2B7A58" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="48" cy="48" r="46"/><path d="M28 50l14 14 27-30"/></svg>
   {% if reservation %}
     <h1 style="font-size:clamp(2.1rem,1.4rem + 3vw,3.4rem)">Your request for {{ kitten.name }} is saved.</h1>
-    <p class="lede">We emailed your reservation to Royal Munchkin Cattery and sent a confirmation from Gmail to {{ reservation.email }}. We’ll reply within one business day. A reservation request does not hold a kitten; the deposit and agreement must be confirmed with us.</p>
+    <p class="lede">We emailed your reservation to American Munchkin House and sent a confirmation from Gmail to {{ reservation.email }}. We’ll reply within one business day. A reservation request does not hold a kitten; the deposit and agreement must be confirmed with us.</p>
     {% if message_channel == "sms" %}<div class="btn-row" style="justify-content:center;margin-top:1.6rem">
         <a class="btn btn-gold" href="{{ sms_compose_url }}">Open prefilled text to our Google Voice number</a>
     </div>{% endif %}

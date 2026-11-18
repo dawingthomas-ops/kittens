@@ -248,8 +248,16 @@ def og_image(path, width=1200, height=630):
     img.paste(kitten, (width - 590, 55), arch)
 
     def font(size, bold=False):
-        for name in ("/usr/share/fonts/opentype/inter/InterDisplay-Bold.otf" if bold else "/usr/share/fonts/opentype/inter/InterDisplay-Medium.otf",
-                     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"):
+        names = (
+            "/usr/share/fonts/opentype/inter/InterDisplay-Bold.otf"
+            if bold
+            else "/usr/share/fonts/opentype/inter/InterDisplay-Medium.otf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+            if bold
+            else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf",
+        )
+        for name in names:
             try:
                 return ImageFont.truetype(name, size)
             except OSError:
@@ -263,8 +271,8 @@ def og_image(path, width=1200, height=630):
     d.rectangle([cx - 56, cy + 34, cx + 56, cy + 48], fill=(244, 206, 112))
     for dx in (-30, 0, 30):
         d.ellipse([cx + dx - 6, cy + 10, cx + dx + 6, cy + 22], fill=(43, 22, 66))
-    d.text((60, 235), "Royal Munchkin", font=font(66, True), fill=(255, 255, 255))
-    d.text((60, 325), "Cattery", font=font(66, True), fill=gold)
+    d.text((60, 235), "American Munchkin", font=font(42, True), fill=(255, 255, 255))
+    d.text((60, 292), "House", font=font(58, True), fill=gold)
     d.text((62, 440), "Home-raised Munchkin kittens", font=font(34), fill=(226, 214, 246))
     d.rounded_rectangle([60, 505, 330, 565], radius=30, fill=gold)
     d.text((86, 517), "$800 - $1,000", font=font(32, True), fill=(43, 22, 66))

@@ -1,4 +1,4 @@
-# Royal Munchkin Cattery
+# American Munchkin House
 
 A production-ready Django 5.2 website for selling Munchkin kittens ($800 to $1,000), built on the same architecture and configuration as the findapomsky project: `config/` + `core`, `kittens` (was `puppies`), `reservations`, `reviews`, `dashboard`, `accounts`; python-decouple env config, WhiteNoise static files, optional AWS S3 media, SQLite by default (Postgres via `DB_*`), DRF API with throttling, SMTP notifications, and Render/Docker/Procfile deployment.
 
@@ -15,14 +15,14 @@ python manage.py seed_journal       # 7 starter care articles (safe for producti
 python manage.py runserver
 ```
 
-Tests: `python manage.py test` (37 tests).
+Tests: `python manage.py test`.
 Administrator dashboard: `/dashboard/` (active Django superuser accounts only). Create the administrator account with `python manage.py createsuperuser`; regular users and staff accounts cannot sign in to or use the dashboard or Django admin. Django admin: `/admin/`.
 
 ## Before you launch (please read)
 
 1. **Replace placeholder kittens.** `seed_demo_data` creates illustrated stand-ins. Run `python manage.py seed_demo_data --clear`, then add real kittens and photos in the dashboard.
 2. **Set your real business details** in Django admin > Site Settings (city/state, phone, WhatsApp, email, social links, announcement banner). City/state default to a placeholder; clear the city field to hide the address from schema markup.
-3. **Set `SITE_DOMAIN`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` and email** in `.env`. The default domain `royalmunchkincattery.com` is a placeholder.
+3. **Connect your domain.** Add `americanmunchkinhouse.com` and `www.americanmunchkinhouse.com` to the Render service and configure the DNS records shown by Render at your domain registrar. `render.yaml` and the default `SITE_DOMAIN` are set for `americanmunchkinhouse.com`; update `ALLOWED_HOSTS` and `CSRF_TRUSTED_ORIGINS` if you use another domain.
 4. **Review all policy copy** (health-guarantee length, deposit handling, delivery options, "starter kit", vaccination claims) in `core/content.py`, `core/landing_pages.py`, the templates, and the Privacy/Terms pages. They are sensible starting points, not legal advice. Have the contract, privacy policy and terms reviewed by a professional.
 5. **No fake reviews.** Customers submit their own reviews and confirm they reflect a real experience. Nothing appears publicly until a staff member with the `reviews.change_testimonial` permission (or a superuser) approves it; staff without that permission cannot moderate. Review text is read-only to moderators, and star-rating markup appears only when approved reviews exist. Fabricated reviews violate Google's guidelines and consumer-protection law.
 6. Optional SEO env vars: `GA_MEASUREMENT_ID`, `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION`. Submit `https://<domain>/sitemap.xml` in Google Search Console and Bing Webmaster Tools.

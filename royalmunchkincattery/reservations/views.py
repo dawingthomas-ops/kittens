@@ -86,7 +86,7 @@ class ReservationThankYouView(View):
             kitten_url = request.build_absolute_uri(kitten.get_absolute_url())
             body = "\n".join(
                 [
-                    f"Hello Royal Munchkin Cattery,",
+                    f"Hello American Munchkin House,",
                     "",
                     f"I'd like to reserve or ask a question about {kitten.name}.",
                     "",

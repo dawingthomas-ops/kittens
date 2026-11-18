@@ -1,13 +1,13 @@
 {% load static %}<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">
-<title>{% block title %}Dashboard{% endblock %} | Royal Munchkin</title>
+<title>{% block title %}Dashboard{% endblock %} | American Munchkin House</title>
 <link rel="icon" href="{% static 'img/favicon.svg' %}">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 </head><body class="dash">
 {% with url=request.resolver_match.url_name %}
 <aside class="dash-side">
-  <a class="logo" href="{% url 'dashboard:overview' %}">{% include "partials/logo.html" %} Royal Munchkin</a>
+  <a class="logo" href="{% url 'dashboard:overview' %}">{% include "partials/logo.html" %} American Munchkin House</a>
   <nav class="dash-nav" aria-label="Administrator navigation">
     <a class="nav {% if url == 'overview' %}active{% endif %}" href="{% url 'dashboard:overview' %}">Overview</a>
     <a class="nav {% if 'reservation' in url %}active{% endif %}" href="{% url 'dashboard:reservations' %}">Reservations</a>

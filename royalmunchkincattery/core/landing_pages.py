@@ -13,11 +13,11 @@ views, URLs, sitemap, schema and navigation are all generated from this dict.
 LANDING_PAGES = {
     "munchkin-kittens-for-sale": {
         "nav_label": "Munchkin kittens for sale",
-        "meta_title": "Munchkin Kittens for Sale | $800-$1,000 | Royal Munchkin Cattery",
+        "meta_title": "Munchkin Kittens for Sale | $800-$1,000 | American Munchkin House",
         "meta_description": "Healthy, home-raised Munchkin kittens for sale at {price_range}. Vet-checked, vaccinated, microchipped, with a written health guarantee. Browse available kittens.",
         "meta_keywords": "munchkin kittens for sale, munchkin kitten for sale, munchkin cat for sale, short leg kittens for sale, munchkin cattery",
         "h1": "Munchkin kittens for sale",
-        "intro": "Every kitten at Royal Munchkin Cattery is born and raised in our home, handled daily from the first week, and priced openly between {price_range}. No bidding, no hidden fees, no surprises.",
+        "intro": "Every kitten at American Munchkin House is born and raised in our home, handled daily from the first week, and priced openly between {price_range}. No bidding, no hidden fees, no surprises.",
         "filters": {},
         "sections": [
             ("What you get with every kitten", [
@@ -37,11 +37,11 @@ LANDING_PAGES = {
     },
     "munchkin-kittens-near-me": {
         "nav_label": "Munchkin kittens near me",
-        "meta_title": "Munchkin Kittens Near Me | Pickup & Delivery | Royal Munchkin",
-        "meta_description": "Looking for Munchkin kittens near you? Royal Munchkin Cattery offers pickup by appointment and safe delivery across the US. See available kittens today.",
+        "meta_title": "Munchkin Kittens Near Me | Pickup & Delivery | American Munchkin House",
+        "meta_description": "Looking for Munchkin kittens near you? American Munchkin House offers pickup by appointment and safe delivery across the US. See available kittens today.",
         "meta_keywords": "munchkin kittens near me, munchkin cat breeder near me, munchkin kittens local, munchkin kittens delivery",
         "h1": "Munchkin kittens near me",
-        "intro": "You do not have to live down the road to bring home a Royal Munchkin kitten. We offer pickup by appointment and carefully arranged delivery to families across the United States.",
+        "intro": "You do not have to live down the road to bring home a kitten from American Munchkin House. We offer pickup by appointment and carefully arranged delivery to families across the United States.",
         "filters": {},
         "sections": [
             ("Local pickup, by appointment", [
@@ -89,7 +89,7 @@ LANDING_PAGES = {
     },
     "longhair-munchkin-kittens": {
         "nav_label": "Longhair Munchkin kittens",
-        "meta_title": "Longhair Munchkin Kittens for Sale | Royal Munchkin Cattery",
+        "meta_title": "Longhair Munchkin Kittens for Sale | American Munchkin House",
         "meta_description": "Fluffy longhair Munchkin kittens for sale at $800 to $1,000. Silky coats, short legs and sweet temperaments, raised in our home and vet-checked.",
         "meta_keywords": "longhair munchkin kittens, long hair munchkin kitten, fluffy munchkin kitten for sale, long haired munchkin cat",
         "h1": "Longhair Munchkin kittens",
@@ -135,7 +135,7 @@ LANDING_PAGES = {
     },
     "calico-munchkin-kittens": {
         "nav_label": "Calico Munchkin kittens",
-        "meta_title": "Calico Munchkin Kittens for Sale | Royal Munchkin Cattery",
+        "meta_title": "Calico Munchkin Kittens for Sale | American Munchkin House",
         "meta_description": "Calico Munchkin kittens for sale at $800 to $1,000. Patchwork coats in white, orange and black, short legs, and big personalities. Browse available calicos.",
         "meta_keywords": "calico munchkin kitten, calico munchkin kittens for sale, tricolor munchkin cat, calico short leg cat",
         "h1": "Calico Munchkin kittens",
@@ -175,13 +175,13 @@ LANDING_PAGES = {
         "faqs": [
             ("Do tabby Munchkins have different temperaments?", "Pattern does not decide temperament. Each kitten's page describes its actual personality."),
             ("What does the M on a tabby's forehead mean?", "It is a natural marking shared by all tabby cats, with many myths but no special meaning."),
-            ("Are tabby Munchkins more affordable?", "All Royal Munchkin kittens are priced between $800 and $1,000 regardless of pattern."),
+            ("Are tabby Munchkins more affordable?", "All kittens from American Munchkin House are priced between $800 and $1,000 regardless of pattern."),
         ],
         "related": ["calico-munchkin-kittens", "shorthair-munchkin-kittens", "male-munchkin-kittens"],
     },
     "black-munchkin-kittens": {
         "nav_label": "Black Munchkin kittens",
-        "meta_title": "Black Munchkin Kittens for Sale | Royal Munchkin Cattery",
+        "meta_title": "Black Munchkin Kittens for Sale | American Munchkin House",
         "meta_description": "Black Munchkin kittens for sale at $800 to $1,000. Glossy coats, golden eyes, short legs and loving temperaments. See available black kittens.",
         "meta_keywords": "black munchkin kitten, black munchkin kittens for sale, black short leg cat, solid black munchkin",
         "h1": "Black Munchkin kittens",
@@ -204,7 +204,7 @@ LANDING_PAGES = {
     },
     "male-munchkin-kittens": {
         "nav_label": "Male Munchkin kittens",
-        "meta_title": "Male Munchkin Kittens for Sale | Royal Munchkin Cattery",
+        "meta_title": "Male Munchkin Kittens for Sale | American Munchkin House",
         "meta_description": "Male Munchkin kittens for sale at $800 to $1,000. Affectionate, playful and vet-checked, with a written health guarantee and delivery options.",
         "meta_keywords": "male munchkin kitten, male munchkin kittens for sale, boy munchkin cat, male short leg kitten",
         "h1": "Male Munchkin kittens",
@@ -227,7 +227,7 @@ LANDING_PAGES = {
     },
     "female-munchkin-kittens": {
         "nav_label": "Female Munchkin kittens",
-        "meta_title": "Female Munchkin Kittens for Sale | Royal Munchkin Cattery",
+        "meta_title": "Female Munchkin Kittens for Sale | American Munchkin House",
         "meta_description": "Female Munchkin kittens for sale at $800 to $1,000. Sweet, spirited and home-raised, with vet checks, vaccinations and a written health guarantee.",
         "meta_keywords": "female munchkin kitten, female munchkin kittens for sale, girl munchkin cat, female short leg kitten",
         "h1": "Female Munchkin kittens",
@@ -250,7 +250,7 @@ LANDING_PAGES = {
     },
     "super-short-leg-munchkin-kittens": {
         "nav_label": "Rug hugger Munchkin kittens",
-        "meta_title": "Super Short Leg & Rug Hugger Munchkin Kittens | Royal Munchkin",
+        "meta_title": "Super Short Leg & Rug Hugger Munchkin Kittens | American Munchkin House",
         "meta_description": "Super short leg ('rug hugger') Munchkin kittens for sale at $800 to $1,000. Learn what the term means, health considerations and how we raise them.",
         "meta_keywords": "rug hugger munchkin, super short leg munchkin kitten, rug hugger kitten for sale, extra short leg cat",
         "h1": "Super short leg ('rug hugger') Munchkin kittens",

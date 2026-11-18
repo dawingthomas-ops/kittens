@@ -14,7 +14,7 @@ def notify_admin_of_reservation(reservation):
 
 
 def notify_customer_confirmation(reservation):
-    subject = f"We received your inquiry about {reservation.kitten.name} | Royal Munchkin Cattery"
+    subject = f"We received your inquiry about {reservation.kitten.name} | American Munchkin House"
     body = render_to_string("emails/reservation_customer_confirmation.txt", {"reservation": reservation})
     return _send(subject, body, [reservation.email], [settings.ADMIN_NOTIFICATION_EMAIL])
 
@@ -25,7 +25,7 @@ def notify_reservation_submission(reservation):
         "emails/reservation_admin_notice.txt",
         {"reservation": reservation, "SITE_DOMAIN": settings.SITE_DOMAIN},
     )
-    customer_subject = f"We received your inquiry about {reservation.kitten.name} | Royal Munchkin Cattery"
+    customer_subject = f"We received your inquiry about {reservation.kitten.name} | American Munchkin House"
     customer_body = render_to_string(
         "emails/reservation_customer_confirmation.txt",
         {"reservation": reservation},

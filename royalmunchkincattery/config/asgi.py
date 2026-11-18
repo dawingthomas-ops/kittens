@@ -1,4 +1,4 @@
-"""ASGI config for Royal Munchkin Cattery (same boot fallback as wsgi.py)."""
+"""ASGI config for American Munchkin House (same boot fallback as wsgi.py)."""
 
 import os
 

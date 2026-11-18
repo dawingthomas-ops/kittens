@@ -31,7 +31,7 @@ class HomeView(TemplateView):
         ctx["faqs"] = FAQS[:5]
         ctx["journey_steps"] = JOURNEY_STEPS
         ctx["available_count"] = _open_kittens().filter(status=Kitten.Status.AVAILABLE).count()
-        ctx["meta_title"] = "Munchkin Kittens for Sale | $800-$1,000 | Royal Munchkin Cattery"
+        ctx["meta_title"] = "Munchkin Kittens for Sale | $800-$1,000 | American Munchkin House"
         ctx["meta_description"] = (
             "Browse Munchkin kittens priced from $800 to $1,000. View each kitten's photos, availability, "
             "and confirmed care details."
@@ -44,9 +44,9 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "About Royal Munchkin Cattery | Ethical Munchkin Breeder"
+        ctx["meta_title"] = "About American Munchkin House | Ethical Munchkin Breeder"
         ctx["meta_description"] = (
-            "Meet the family behind Royal Munchkin Cattery: small litters, home-raised Munchkin kittens, "
+            "Meet the family behind American Munchkin House: small litters, home-raised Munchkin kittens, "
             "honest health information and fair $800 to $1,000 pricing."
         )
         ctx["breadcrumbs"] = [("Home", "/"), ("About", "/about/")]
@@ -74,7 +74,7 @@ class DeliveryView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["delivery_options"] = DELIVERY_OPTIONS
-        ctx["meta_title"] = "Munchkin Kitten Delivery & Pickup | Royal Munchkin Cattery"
+        ctx["meta_title"] = "Munchkin Kitten Delivery & Pickup | American Munchkin House"
         ctx["meta_description"] = (
             "How Munchkin kitten pickup and delivery works: visits by appointment, ground delivery and "
             "in-cabin flight nanny. Kittens never fly in cargo."
@@ -106,10 +106,10 @@ class ContactView(FormView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Contact Royal Munchkin Cattery | Ask About Munchkin Kittens"
+        ctx["meta_title"] = "Contact American Munchkin House | Ask About Munchkin Kittens"
         ctx["meta_description"] = (
             "Questions about available Munchkin kittens, delivery or the adoption process? "
-            "Message Royal Munchkin Cattery and we reply within one business day."
+            "Message American Munchkin House and we reply within one business day."
         )
         ctx["breadcrumbs"] = [("Home", "/"), ("Contact", "/contact/")]
         return ctx
@@ -142,7 +142,7 @@ class WaitlistView(FormView):
         ctx = super().get_context_data(**kwargs)
         ctx["meta_title"] = "Munchkin Kitten Waitlist | Be First to Hear About New Litters"
         ctx["meta_description"] = (
-            "Join the Royal Munchkin Cattery waitlist and tell us the coat, color and personality "
+            "Join the American Munchkin House waitlist and tell us the coat, color and personality "
             "you want. We contact waitlist families first when a new litter arrives."
         )
         ctx["breadcrumbs"] = [("Home", "/"), ("Waitlist", "/waitlist/")]
@@ -169,7 +169,7 @@ class ThanksView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx.update({"title": self.title, "message": self.message, "noindex": True, "meta_title": f"{self.title} | Royal Munchkin Cattery"})
+        ctx.update({"title": self.title, "message": self.message, "noindex": True, "meta_title": f"{self.title} | American Munchkin House"})
         return ctx
 
     template_name = "core/thanks.html"
@@ -232,7 +232,7 @@ class JournalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         post = self.object
-        ctx["meta_title"] = f"{post.title} | Royal Munchkin"
+        ctx["meta_title"] = f"{post.title} | American Munchkin House"
         ctx["meta_description"] = post.seo_description
         ctx["og_image"] = post.featured_image.url if post.featured_image else ""
         ctx["related_posts"] = Post.objects.filter(is_published=True).exclude(pk=post.pk)[:3]
@@ -246,8 +246,8 @@ class PrivacyView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Privacy Policy | Royal Munchkin Cattery"
-        ctx["meta_description"] = "How Royal Munchkin Cattery collects, uses and protects your information."
+        ctx["meta_title"] = "Privacy Policy | American Munchkin House"
+        ctx["meta_description"] = "How American Munchkin House collects, uses and protects your information."
         ctx["breadcrumbs"] = [("Home", "/"), ("Privacy", "/privacy/")]
         return ctx
 
@@ -257,8 +257,8 @@ class TermsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["meta_title"] = "Terms of Service | Royal Munchkin Cattery"
-        ctx["meta_description"] = "The terms that apply to using the Royal Munchkin Cattery website and reserving a kitten."
+        ctx["meta_title"] = "Terms of Service | American Munchkin House"
+        ctx["meta_description"] = "The terms that apply to using the American Munchkin House website and reserving a kitten."
         ctx["breadcrumbs"] = [("Home", "/"), ("Terms", "/terms/")]
         return ctx
 

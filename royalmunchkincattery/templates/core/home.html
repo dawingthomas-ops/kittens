@@ -9,7 +9,7 @@
   <div class="container hero-grid">
     <div class="hero-copy">
       {% if available_count %}<a class="hero-live reveal-seq" style="--s:0" href="{% url 'kittens:list' %}"><span class="pulse-dot" aria-hidden="true"></span>{{ available_count }} kitten{{ available_count|pluralize }} available to reserve</a>{% endif %}
-      <h1 class="reveal-seq" style="--s:1">Munchkin kittens for sale, raised like royalty</h1>
+      <h1 class="reveal-seq" style="--s:1">Munchkin kittens for sale, raised with care</h1>
       <p class="lede reveal-seq" style="--s:2">Munchkin kittens with individual profiles, current availability, and clear pricing from ${{ MIN_PRICE }} to ${{ MAX_PRICE|intcomma }}. Health and readiness details are shown on each kitten's page.</p>
       <div class="btn-row reveal-seq" style="--s:3">
         <a class="btn btn-gold" href="{% url 'kittens:list' %}">Meet the kittens</a>

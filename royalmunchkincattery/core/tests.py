@@ -92,6 +92,15 @@ class PublicPageTests(TestCase):
         self.assertContains(response, '<div class="footer-admin">', html=False)
         self.assertContains(response, 'href="/accounts/login/" rel="nofollow">Admin sign in</a>', html=False)
 
+    def test_new_brand_is_used_in_site_and_app_manifest(self):
+        response = self.client.get("/")
+        self.assertContains(response, "American Munchkin House")
+        self.assertContains(response, f'href="https://{settings.SITE_DOMAIN}/"')
+
+        manifest = self.client.get("/site.webmanifest")
+        self.assertContains(manifest, '"name": "American Munchkin House"')
+        self.assertContains(manifest, '"short_name": "Munchkin House"')
+
     def test_google_voice_and_email_are_public_contact_methods(self):
         self.assertEqual(settings.ADMIN_NOTIFICATION_EMAIL, "dawingthomas@gmail.com")
         site_settings = SiteSettings.load()
@@ -203,7 +212,7 @@ class PublicPageTests(TestCase):
     def test_filtered_listing_is_noindex_with_clean_canonical(self):
         html = self.client.get("/kittens/?gender=female").content.decode()
         self.assertIn("noindex", html)
-        self.assertIn('rel="canonical" href="https://royalmunchkincattery.com/kittens/"', html)
+        self.assertIn('rel="canonical" href="https://americanmunchkinhouse.com/kittens/"', html)
 
     def test_sitemap_and_robots(self):
         sm = self.client.get("/sitemap.xml").content.decode()
@@ -213,7 +222,7 @@ class PublicPageTests(TestCase):
         self.assertIn("munchkin-kittens-for-sale", sm)
         self.assertIn("hello-post", sm)
         robots = self.client.get("/robots.txt").content.decode()
-        self.assertIn("Sitemap: https://royalmunchkincattery.com/sitemap.xml", robots)
+        self.assertIn("Sitemap: https://americanmunchkinhouse.com/sitemap.xml", robots)
         self.assertIn("Disallow: /dashboard/", robots)
 
     def test_match_quiz_scores_and_ranks(self):

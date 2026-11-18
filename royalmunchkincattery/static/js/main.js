@@ -1,4 +1,4 @@
-/* Royal Munchkin Cattery: site behaviour. Everything here is progressive
+/* American Munchkin House: site behaviour. Everything here is progressive
    enhancement; every page works with JavaScript disabled. */
 (function () {
   "use strict";

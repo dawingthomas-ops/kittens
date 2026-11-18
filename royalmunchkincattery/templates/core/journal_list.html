@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <section class="section"><div class="container">
-  <div class="section-head"><h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">The Royal Munchkin journal</h1>
+  <div class="section-head"><h1 style="font-size:clamp(2.2rem,1.4rem + 3.4vw,3.8rem)">The American Munchkin House journal</h1>
   <p class="lede">Practical, honest guides for Munchkin owners: feeding, home setup, grooming, health and first-week tips.</p></div>
   <div class="post-grid">{% for post in posts %}{% include "partials/post_card.html" %}{% empty %}<p class="empty-state">New articles are on the way.</p>{% endfor %}</div>
   {% if is_paginated %}<nav class="pager" aria-label="Pagination">{% if page_obj.has_previous %}<a class="btn btn-ghost btn-sm" href="?page={{ page_obj.previous_page_number }}" rel="prev">Previous</a>{% endif %}<span class="muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>{% if page_obj.has_next %}<a class="btn btn-ghost btn-sm" href="?page={{ page_obj.next_page_number }}" rel="next">Next</a>{% endif %}</nav>{% endif %}
