@@ -12,7 +12,71 @@ services:
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
       - key: DJANGO_DEBUG
         value: "False"
+      - key: SECURE_SSL_REDIRECT
+        value: "True"
+      - key: USE_S3
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_STORAGE_BUCKET_NAME
+        sync: false
+      - key: AWS_S3_REGION_NAME
+        sync: false
+      - key: AWS_S3_CUSTOM_DOMAIN
+        sync: false
+      - key: SERVE_LOCAL_MEDIA
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "royalmunchkincattery.com,www.royalmunchkincattery.com,royalmunchkincattery.onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://royalmunchkincattery.com,https://www.royalmunchkincattery.com,https://royalmunchkincattery.onrender.com"
+      - key: DB_ENGINE
+        value: django.db.backends.postgresql
+      - key: DB_NAME
+        fromDatabase:
+          name: royalmunchkincattery-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: royalmunchkincattery-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: royalmunchkincattery-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: royalmunchkincattery-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: royalmunchkincattery-db
+          property: port
+      - key: EMAIL_BACKEND
+        value: django.core.mail.backends.smtp.EmailBackend
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: DEFAULT_FROM_EMAIL
+        sync: false
+      - key: ADMIN_NOTIFICATION_EMAIL
+        sync: false
       - key: PYTHON_VERSION
         value: "3.13"
+
+databases:
+  - name: royalmunchkincattery-db
+    plan: free

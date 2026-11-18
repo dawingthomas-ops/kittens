@@ -12,15 +12,32 @@ import sys
 from pathlib import Path
 
 from decouple import Csv, config
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TESTING = "test" in sys.argv
+BUILDING_OR_MANAGING = any(
+    command in sys.argv
+    for command in (
+        "collectstatic",
+        "makemigrations",
+        "migrate",
+        "check",
+        "showmigrations",
+    )
+)
 
 # ---------------------------------------------------------------------------
 # Core / security
 # ---------------------------------------------------------------------------
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="dev-insecure-key-change-me")
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
+
+if not DEBUG and not TESTING and not BUILDING_OR_MANAGING:
+    if SECRET_KEY == "dev-insecure-key-change-me":
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY must be set to a strong secret in production."
+        )
 ALLOWED_HOSTS = config(
     "DJANGO_ALLOWED_HOSTS",
     default="royalmunchkincattery.com,www.royalmunchkincattery.com,*.onrender.com,localhost,127.0.0.1,0.0.0.0",
