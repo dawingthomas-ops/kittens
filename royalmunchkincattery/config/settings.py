@@ -45,9 +45,14 @@ ALLOWED_HOSTS = config(
 )
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
-    default="https://royalmunchkincattery.com,https://www.royalmunchkincattery.com,https://*.onrender.com",
+    default="https://royalmunchkincattery.com,https://www.royalmunchkincattery.com,https://royalmunchkincattery.onrender.com",
     cast=Csv(),
 )
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in CSRF_TRUSTED_ORIGINS
+    if origin.strip().startswith(("http://", "https://"))
+]
 
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
